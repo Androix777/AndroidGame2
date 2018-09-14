@@ -40,15 +40,21 @@ public class PlayerCreator : MonoBehaviour
         Player.GetComponent<Hero>().sumJumps = JUMPS_NUMBER + upgrade[3];
         Player.GetComponent<Hero>().jumpForce = JUMP_FORCE + upgrade[4];
 
-       GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
-       cam.transform.SetParent(Player.transform);
-       cam.transform.localPosition = new Vector3 (0,0,-10);
-
         GameObject gun = Instantiate(Gun, Player.transform) as GameObject;
         gun.transform.localPosition=Vector3.zero;
         gun.GetComponent<Gun>().damageMultipl = MULT_DAMAGE;
         gun.GetComponent<Gun>().speedFireMultipl = MULT_SPEED_FIRE;
+        gun.GetComponent<Gun>().ally = true;
         gun.SetActive(true);
+        Player.GetComponent<GunAIHero>().gun=gun;
+
+        GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
+        cam.transform.SetParent(Player.transform);
+        cam.transform.localPosition = new Vector3 (0,0,-10);
+
+       
+
+       
 
         GameObject.FindGameObjectWithTag("Generator").GetComponent<Generator>().teleportationNextRoom();
     }

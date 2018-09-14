@@ -121,9 +121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  speedBullet: 100
   speedFire: 90
-  speedBullet: 1
-  bullet: {fileID: 1937631166165518}
 --- !u!114 &114603417126176950
 MonoBehaviour:
   m_ObjectHideFlags: 1

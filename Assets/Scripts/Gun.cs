@@ -14,16 +14,16 @@ public class Gun : MonoBehaviour {
 
 
     float reloaded = 0;
-    public bool ally;
+    public bool ally{get;set;}
 
-    public GameObject bullet;
+    GameObject bullet;
 
 	// Use this for initialization
 	void Start () {
-
+        
         damageMultipl = 1;
         speedFireMultipl = 1;
-
+        bullet=gameObject.transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame

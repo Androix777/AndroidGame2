@@ -5,13 +5,14 @@ using UnityEngine;
 public class GunAIHero : MonoBehaviour {
 
    
-    public GameObject gun;
+    public GameObject gun{get;set;}
 
     Joystick control;
 
     // Use this for initialization
     void Start () {
-        control = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();    
+        control = GameObject.FindGameObjectWithTag("Joystick").GetComponent<Joystick>();
+            
     }
 	
 	// Update is called once per frame
