@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-	public bool ally{private get; set;}
-	public float damage{private get; set;}
-	// Use this for initialization
-	void Start () {
-		
-	}
+	public bool ally { private get; set; }
+	public float damage { private get; set; }
+    public float speed { private get; set; }
+    public Vector3 moveVector { private get; set; }
+    // Use this for initialization
+    void Start () {
+        gameObject.GetComponent<Rigidbody2D>().AddForce(speed * moveVector);
+    }
 	
 	// Update is called once per frame
 	void Update () {

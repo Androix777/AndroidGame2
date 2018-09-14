@@ -19,7 +19,6 @@ public class PlayerCreator : MonoBehaviour
     const float SPEED = 10;
     const float MULT_DAMAGE = 1;
     const float MULT_SPEED_FIRE = 1;
-    const float MULT_SPEED_BULLET = 1;
 
     const int JUMPS_NUMBER = 4;
     const float JUMP_FORCE = 10;
@@ -48,7 +47,6 @@ public class PlayerCreator : MonoBehaviour
         GameObject gun = Instantiate(Gun, Player.transform) as GameObject;
         gun.transform.localPosition=Vector3.zero;
         gun.GetComponent<Gun>().damageMultipl = MULT_DAMAGE;
-        gun.GetComponent<Gun>().speedBulletMultipl = MULT_SPEED_BULLET;
         gun.GetComponent<Gun>().speedFireMultipl = MULT_SPEED_FIRE;
         gun.SetActive(true);
 
