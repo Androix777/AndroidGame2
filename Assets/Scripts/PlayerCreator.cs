@@ -48,7 +48,7 @@ public class PlayerCreator : MonoBehaviour
         gun.GetComponent<Gun>().speedFireMultipl = MULT_SPEED_FIRE;
         gun.GetComponent<Gun>().ally = true;
         gun.SetActive(true);
-        Player.GetComponent<GunAIHero>().gun=gun;
+        gun.GetComponent<GunAIHero>().gun=gun;
 
         GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
         cam.transform.SetParent(Player.transform);

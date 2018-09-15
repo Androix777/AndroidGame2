@@ -5,7 +5,7 @@ using UnityEngine;
 public class GunAIMachineGun : MonoBehaviour {
     GameObject hero;
     GameObject room;
-    public GameObject gun;
+    public GameObject gun { get; set; }
 
     public float angleView;
     public float angleStart;
