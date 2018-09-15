@@ -199,7 +199,6 @@ GameObject:
   - component: {fileID: 155348983}
   - component: {fileID: 155348982}
   - component: {fileID: 155348981}
-  - component: {fileID: 155348984}
   m_Layer: 5
   m_Name: PlayButton
   m_TagString: Untagged
@@ -334,20 +333,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 155348979}
   m_CullTransparentMesh: 0
---- !u!114 &155348984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 155348979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2059af4aa6a80043a7ba9a1d0422ef9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layoutClose: {fileID: 0}
-  layoutOpen: {fileID: 0}
-  SceneName: Game
 --- !u!1 &286185663
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,7 +344,6 @@ GameObject:
   - component: {fileID: 286185667}
   - component: {fileID: 286185666}
   - component: {fileID: 286185665}
-  - component: {fileID: 286185668}
   m_Layer: 5
   m_Name: UpgradesButton
   m_TagString: Untagged
@@ -425,9 +409,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 286185668}
-        m_MethodName: Change
-        m_Mode: 1
+      - m_Target: {fileID: 1551412985}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1593889972}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -472,20 +467,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 286185663}
   m_CullTransparentMesh: 0
---- !u!114 &286185668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 286185663}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2059af4aa6a80043a7ba9a1d0422ef9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layoutClose: {fileID: 1593889972}
-  layoutOpen: {fileID: 1551412985}
-  SceneName: 
 --- !u!1 &353837893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1007,9 +988,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1593498477}
-        m_MethodName: Change
-        m_Mode: 1
+      - m_Target: {fileID: 1551412985}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1017,6 +998,17 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1593889972}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -1115,7 +1107,6 @@ GameObject:
   - component: {fileID: 1695395984}
   - component: {fileID: 1695395983}
   - component: {fileID: 1695395982}
-  - component: {fileID: 1695395985}
   m_Layer: 5
   m_Name: WeaponsButton
   m_TagString: Untagged
@@ -1181,9 +1172,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1695395985}
-        m_MethodName: Change
-        m_Mode: 1
+      - m_Target: {fileID: 1551412985}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1593889972}
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1228,20 +1230,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1695395980}
   m_CullTransparentMesh: 0
---- !u!114 &1695395985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1695395980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2059af4aa6a80043a7ba9a1d0422ef9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layoutClose: {fileID: 1593889972}
-  layoutOpen: {fileID: 1551412985}
-  SceneName: 
 --- !u!1 &1725504204
 GameObject:
   m_ObjectHideFlags: 0
