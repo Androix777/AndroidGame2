@@ -10,9 +10,11 @@ public class PlayerCreator : MonoBehaviour
 
     GameObject Hero;
     public GameObject Gun;
-    private int[] gun { get; set; }
+    public int[] guns { get; set; }
+    public int[] gunsInfo { get; set; }
 
-    private int[] upgrade { get; set; }
+    public int[] upgrades { get; set; }
+    public int[] upgradesInfo { get; set; }
 
     int[] t = { 1, 2, 3 };
     const int HP = 100;
@@ -28,17 +30,17 @@ public class PlayerCreator : MonoBehaviour
     private void Awake()
     {
         Hero = Resources.Load("Hero") as GameObject;
-        gun = new int[GUNS_NUMBER];
-        upgrade = new int[UPGRADES_NUMBER];
+        guns = new int[GUNS_NUMBER];
+        upgrades = new int[UPGRADES_NUMBER];
     }
 
     public void CreateHero()
     {
         GameObject Player = Instantiate(Hero, gameObject.transform.position,transform.rotation);
-        Player.GetComponent<Hero>().Hp = HP + upgrade[0];
-        Player.GetComponent<Hero>().maxSpeed = SPEED + upgrade[1];
-        Player.GetComponent<Hero>().sumJumps = JUMPS_NUMBER + upgrade[3];
-        Player.GetComponent<Hero>().jumpForce = JUMP_FORCE + upgrade[4];
+        Player.GetComponent<Hero>().Hp = HP + upgrades[0];
+        Player.GetComponent<Hero>().maxSpeed = SPEED + upgrades[1];
+        Player.GetComponent<Hero>().sumJumps = JUMPS_NUMBER + upgrades[3];
+        Player.GetComponent<Hero>().jumpForce = JUMP_FORCE + upgrades[4];
 
         GameObject gun = Instantiate(Gun, Player.transform) as GameObject;
         gun.transform.localPosition=Vector3.zero;
