@@ -17,10 +17,10 @@ public class Hero : MonoBehaviour {
 
     void Start()
     {
-        Hp = 100;
-        maxSpeed = 10;
-        sumJumps = 4;
-        jumpForce = 10;
+        //Hp = 100;
+        //maxSpeed = 10;
+        //sumJumps = 4;
+        //jumpForce = 10;
         rigidbodyHero = gameObject.GetComponent<Rigidbody2D>();
     }
 

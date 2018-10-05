@@ -11,7 +11,7 @@ public class GunnerWalker : MonoBehaviour
     public float damage;
     public float damageMultiplu;
 
-    public string tag;
+    //public string tag;
 
     public Vector3 Move;
     public bool sideMob = true;
