@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class PlayerCreator : MonoBehaviour
 {
@@ -65,4 +68,55 @@ public class PlayerCreator : MonoBehaviour
 
 
 
+    public void SaveGame()
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/" + "Profile" + ".dat");
+
+        Profile profile = new Profile();
+
+        profile.Hero = Hero;
+        profile.Gun = Gun;
+        profile.guns = guns;
+        profile.upgrades = upgrades;
+
+        bf.Serialize(file, profile);
+        file.Close();
+        Debug.Log("Save");
+    }
+
+    public void LoadGame()
+    {
+        if (File.Exists(Application.persistentDataPath + "/" + "Profile" + ".dat"))
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/" + gameObject.name + ".dat", FileMode.Open);
+
+            Profile profile = (Profile)bf.Deserialize(file);
+            file.Close();
+
+            Hero = profile.Hero;
+            Gun = profile.Gun;
+            guns = profile.guns;
+            upgrades = profile.upgrades;
+
+            Debug.Log("Load");
+        }
+
+    }
+
+
+
+
 }
+
+
+[Serializable]
+class Profile
+{
+    public GameObject Hero { get; set; }
+    public GameObject Gun { get; set; }
+    public int[] guns { get; set; }
+    public int[] upgrades { get; set; }
+
+} 

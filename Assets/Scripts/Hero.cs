@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 public class Hero : MonoBehaviour {
+    public float dist;
     public int Hp { get; set; }
     public float maxSpeed { get; set; }
     public float jumpForce { get; set; }
@@ -16,13 +17,20 @@ public class Hero : MonoBehaviour {
 
     void Start()
     {
+        Hp = 100;
+        maxSpeed = 10;
+        sumJumps = 4;
+        jumpForce = 10;
         rigidbodyHero = gameObject.GetComponent<Rigidbody2D>();
     }
 
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground" && collision.collider.bounds.max.y <= gameObject.GetComponent<Collider2D>().bounds.min.y)
+       
+
+
+        if (collision.gameObject.tag == "Ground" && EnterGround())
         {
 
             grounded = true;
@@ -50,8 +58,28 @@ public class Hero : MonoBehaviour {
 
         move = Input.GetAxis("Horizontal");
         rigidbodyHero.velocity = new Vector2(move * maxSpeed, rigidbodyHero.velocity.y);
+
+
+        
+        Debug.DrawRay(transform.position, Vector3.down * dist, Color.yellow);
+
+       
+        
     }
 
-   
- 
+    public bool EnterGround()
+    {
+
+        RaycastHit2D[] objs = Physics2D.RaycastAll(transform.position, Vector3.down, dist);
+
+        foreach (RaycastHit2D obj in objs)
+        {
+            if (obj.transform.tag == "Ground")
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

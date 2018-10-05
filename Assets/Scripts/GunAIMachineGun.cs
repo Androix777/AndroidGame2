@@ -11,39 +11,56 @@ public class GunAIMachineGun : MonoBehaviour {
     public float angleStart;
 
     // Use this for initialization
-    void Start () {
-
+    void Start() {
+        gun = gameObject;
         hero = GameObject.FindGameObjectWithTag("Hero").gameObject;
         room = GameObject.FindGameObjectWithTag("Room").gameObject;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update() {
         Vector3 difference = hero.transform.position - transform.position;
         float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-        rotationZ = (360 + rotationZ) % 360;
-        float minAngle = (360 + angleStart - angleView) % 360;
-        float maxAngle = (360 + angleStart + angleView) % 360;
+        rotationZ = (361 + rotationZ) % 361;
+        float minAngle = (361 + angleStart - angleView) % 361;
+        float maxAngle = (361 + angleStart + angleView) % 361;
 
-        if (maxAngle < angleStart || minAngle > angleStart)
+        if (SeeTarget())
         {
-            if (rotationZ <= maxAngle && rotationZ >= 0 || rotationZ <= 360 && rotationZ >= minAngle )
+            if (maxAngle < angleStart || minAngle > angleStart)
             {
-                Debug.Log(1);
-                gun.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
-                gun.GetComponent<Gun>().Fire(difference.normalized);
+                if (rotationZ <= maxAngle && rotationZ >= 0 || rotationZ <= 360 && rotationZ >= minAngle)
+                {
+                    Debug.Log(1);
+                    gun.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
+                    gun.GetComponent<Gun>().Fire(difference.normalized);
+                }
+            }
+            else
+            {
+                if (rotationZ <= maxAngle && rotationZ >= angleStart || rotationZ <= maxAngle && rotationZ >= minAngle)
+                {
+                    Debug.Log(2);
+                    gun.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
+                    gun.GetComponent<Gun>().Fire(difference.normalized);
+                }
             }
         }
-        else
+
+            
+
+
+    }
+    public bool SeeTarget()
+    {
+        // Debug.Log(Physics2D.Raycast(transform.position, target.transform.position - transform.position).transform.tag);
+        // Debug.DrawRay(transform.position, target.transform.position - transform.position, Color.red);
+
+        if (Physics2D.Raycast(transform.position, hero.transform.position - transform.position).transform.tag == "Hero")
         {
-            if (rotationZ <= maxAngle && rotationZ >= angleStart || rotationZ <= maxAngle && rotationZ >= minAngle)
-            {
-                Debug.Log(2);
-                gun.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
-                gun.GetComponent<Gun>().Fire(difference.normalized);
-            }
+            return true;
         }
-        
-       
+        else return false;
     }
 }
+
