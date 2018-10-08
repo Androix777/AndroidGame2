@@ -10,6 +10,9 @@ public class Hero : MonoBehaviour {
     public float jumpForce { get; set; }
     public int sumJumps { get; set; }
 
+    public enum state { flyRight,fallRight,moveRight, stayRight, flyLeft, fallLeft, moveLeft, stayLeft }
+
+    public state mystate;
     bool grounded = false;
     Rigidbody2D rigidbodyHero;
     int numberJump;
@@ -22,16 +25,16 @@ public class Hero : MonoBehaviour {
         sumJumps = 4;
         jumpForce = 10;
         rigidbodyHero = gameObject.GetComponent<Rigidbody2D>();
+        mystate = state.stayLeft;
     }
 
 
     private void OnCollisionStay2D(Collision2D collision)
     {
        
-
-
         if (collision.gameObject.tag == "Ground" && EnterGround())
         {
+            
 
             grounded = true;
             numberJump = sumJumps - 1;
@@ -49,22 +52,18 @@ public class Hero : MonoBehaviour {
 
     void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.W) && (numberJump > 0 || grounded))
         {
             rigidbodyHero.velocity = new Vector2(rigidbodyHero.velocity.x, 0);
             rigidbodyHero.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
             numberJump -= 1;
         }
-
+        
         move = Input.GetAxis("Horizontal");
         rigidbodyHero.velocity = new Vector2(move * maxSpeed, rigidbodyHero.velocity.y);
 
-
-        
-        Debug.DrawRay(transform.position, Vector3.down * dist, Color.yellow);
-
-       
-        
+        CheakMyState();
     }
 
     public bool EnterGround()
@@ -82,4 +81,81 @@ public class Hero : MonoBehaviour {
         return false;
     }
 
+
+    private void CheakMyState()
+    {
+        if (grounded)
+        {
+            if (rigidbodyHero.velocity.x > 0)
+            {
+                mystate = state.moveRight;
+            }
+            if (rigidbodyHero.velocity.x < 0)
+            {
+                mystate = state.moveLeft;
+            }
+            if (rigidbodyHero.velocity.x == 0)
+            {
+                if (mystate == state.moveLeft || mystate == state.flyLeft || mystate == state.fallLeft || mystate == state.stayLeft)
+                {
+                    mystate = state.stayLeft;
+                }
+                else
+                {
+                    mystate = state.stayRight;
+                }
+            }
+        }
+        else
+        {
+            if (rigidbodyHero.velocity.y > 0)
+            {
+                if (rigidbodyHero.velocity.x > 0)
+                {
+                    mystate = state.flyRight;
+                }
+                if (rigidbodyHero.velocity.x < 0)
+                {
+                    mystate = state.flyLeft;
+                }
+
+                if (rigidbodyHero.velocity.x == 0)
+                {
+                    if (mystate == state.moveLeft || mystate == state.flyLeft || mystate == state.fallLeft || mystate == state.stayLeft)
+                    {
+                        mystate = state.flyLeft;
+                    }
+                    else
+                    {
+                        mystate = state.flyRight;
+                    }
+                }
+            }
+            else
+            {
+                if (rigidbodyHero.velocity.x > 0)
+                {
+                    mystate = state.fallRight;
+                }
+                if (rigidbodyHero.velocity.x < 0)
+                {
+                    mystate = state.fallLeft;
+                }
+
+                if (rigidbodyHero.velocity.x == 0)
+                {
+                    if (mystate == state.moveLeft || mystate == state.flyLeft || mystate == state.fallLeft || mystate == state.stayLeft)
+                    {
+                        mystate = state.fallLeft;
+                    }
+                    else
+                    {
+                        mystate = state.fallRight;
+                    }
+                }
+            }
+        }
+    }
 }
+
+
