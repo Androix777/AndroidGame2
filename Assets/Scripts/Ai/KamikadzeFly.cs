@@ -11,7 +11,7 @@ public class KamikadzeFly : MonoBehaviour {
     public float damage;
     public float damageMultiplu;
 
-    public string tag;
+    //public string tag;
     // Use this for initialization
 
     public Vector3 Move;
@@ -31,7 +31,7 @@ public class KamikadzeFly : MonoBehaviour {
         {
             //gameObject.GetComponent<Rigidbody2D>().AddForce(-Move);
             // Move = -Move;
-            MoveRandom = new Vector3(Random.RandomRange(-100, 100), Random.RandomRange(-100, 100)).normalized * speed * speedMultiplu/2;
+            MoveRandom = new Vector3(Random.Range(-100, 100), Random.Range(-100, 100)).normalized * speed * speedMultiplu/2;
             gameObject.GetComponent<Rigidbody2D>().AddForce(MoveRandom);
 
         }
