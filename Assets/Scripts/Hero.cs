@@ -17,7 +17,7 @@ public class Hero : MonoBehaviour {
     Rigidbody2D rigidbodyHero;
     int numberJump;
     float move;
-
+    Animator animator;
     void Start()
     {
         //Hp = 100;
@@ -26,6 +26,7 @@ public class Hero : MonoBehaviour {
         //jumpForce = 10;
         rigidbodyHero = gameObject.GetComponent<Rigidbody2D>();
         mystate = state.stayLeft;
+        animator = GetComponent<Animator>();
     }
 
 
@@ -63,7 +64,7 @@ public class Hero : MonoBehaviour {
         move = Input.GetAxis("Horizontal");
         rigidbodyHero.velocity = new Vector2(move * maxSpeed, rigidbodyHero.velocity.y);
 
-        CheakMyState();
+        CheckMyState();
     }
 
     public bool EnterGround()
@@ -82,27 +83,36 @@ public class Hero : MonoBehaviour {
     }
 
 
-    private void CheakMyState()
+    private void CheckMyState()
     {
         if (grounded)
         {
             if (rigidbodyHero.velocity.x > 0)
             {
                 mystate = state.moveRight;
+                GetComponent<SpriteRenderer>().flipX = true;
+                animator.SetInteger("mode", 1);
             }
+            else
             if (rigidbodyHero.velocity.x < 0)
             {
                 mystate = state.moveLeft;
+                GetComponent<SpriteRenderer>().flipX = false;
+                animator.SetInteger("mode", 1);
             }
+            else
             if (rigidbodyHero.velocity.x == 0)
             {
+                animator.SetInteger("mode", 0);
                 if (mystate == state.moveLeft || mystate == state.flyLeft || mystate == state.fallLeft || mystate == state.stayLeft)
                 {
                     mystate = state.stayLeft;
+                    GetComponent<SpriteRenderer>().flipX = false;
                 }
                 else
                 {
                     mystate = state.stayRight;
+                    GetComponent<SpriteRenderer>().flipX = true;
                 }
             }
         }
@@ -110,13 +120,17 @@ public class Hero : MonoBehaviour {
         {
             if (rigidbodyHero.velocity.y > 0)
             {
+                animator.SetInteger("mode", 2);
                 if (rigidbodyHero.velocity.x > 0)
                 {
                     mystate = state.flyRight;
+                    GetComponent<SpriteRenderer>().flipX = true;
                 }
+                else
                 if (rigidbodyHero.velocity.x < 0)
                 {
                     mystate = state.flyLeft;
+                    GetComponent<SpriteRenderer>().flipX = false;
                 }
 
                 if (rigidbodyHero.velocity.x == 0)
@@ -124,33 +138,41 @@ public class Hero : MonoBehaviour {
                     if (mystate == state.moveLeft || mystate == state.flyLeft || mystate == state.fallLeft || mystate == state.stayLeft)
                     {
                         mystate = state.flyLeft;
+                        GetComponent<SpriteRenderer>().flipX = false;
                     }
                     else
                     {
                         mystate = state.flyRight;
+                        GetComponent<SpriteRenderer>().flipX = true;
                     }
                 }
             }
             else
             {
+                animator.SetInteger("mode", 3);
                 if (rigidbodyHero.velocity.x > 0)
                 {
                     mystate = state.fallRight;
+                    GetComponent<SpriteRenderer>().flipX = true;
                 }
+                else
                 if (rigidbodyHero.velocity.x < 0)
                 {
                     mystate = state.fallLeft;
+                    GetComponent<SpriteRenderer>().flipX = false;
                 }
-
+                else
                 if (rigidbodyHero.velocity.x == 0)
                 {
                     if (mystate == state.moveLeft || mystate == state.flyLeft || mystate == state.fallLeft || mystate == state.stayLeft)
                     {
                         mystate = state.fallLeft;
+                        GetComponent<SpriteRenderer>().flipX = false;
                     }
                     else
                     {
                         mystate = state.fallRight;
+                        GetComponent<SpriteRenderer>().flipX = true;
                     }
                 }
             }
