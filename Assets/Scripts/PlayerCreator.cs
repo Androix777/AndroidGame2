@@ -20,7 +20,7 @@ public class PlayerCreator : MonoBehaviour
     public int[] upgradesInfo { get; set; }
 
     int[] t = { 1, 2, 3 };
-    const int HP = 100;
+    const float HP = 100;
     const float SPEED = 10;
     const float MULT_DAMAGE = 1;
     const float MULT_SPEED_FIRE = 1;

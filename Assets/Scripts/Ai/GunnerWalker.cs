@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class GunnerWalker : MonoBehaviour
 {
+    public float rangeRay;
+
+    public int hp;
+    public int hpMultiplu;
+
     GameObject target;
     public float speed;
     public float speedMultiplu;
@@ -11,23 +16,24 @@ public class GunnerWalker : MonoBehaviour
     public float damage;
     public float damageMultiplu;
 
-    //public string tag;
-
-    public Vector3 Move;
     public bool sideMob = true;
+
     // Use this for initialization
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Hero");
-        Move = Vector3.right * speed * speedMultiplu;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (hp <= 0)
+        {
+            Destroy(gameObject, 0);
+        }
         if (target != null && !SeeTarget() && EnterGround())
         {
-            // Debug.Log("See");
+             Debug.Log("See");
             if (!SeeBreakage(sideMob))
             {
                 sideMob = !sideMob;
@@ -44,8 +50,6 @@ public class GunnerWalker : MonoBehaviour
 
     public bool SeeTarget()
     {
-        //  Debug.Log(Physics2D.Raycast(transform.position, target.transform.position - transform.position).transform.tag);
-        // Debug.DrawRay(transform.position, target.transform.position - transform.position, Color.red);
 
         if (Physics2D.Raycast(transform.position, target.transform.position - transform.position).transform.tag == "Ground")
         {
@@ -57,14 +61,14 @@ public class GunnerWalker : MonoBehaviour
     public bool SeeBreakage(bool side)
     {
         Vector3 sides;
-        if (side) sides = Vector3.right / 3;
-        else sides = Vector3.left / 3;
+        if (side) sides = Vector3.right * rangeRay;
+        else sides = Vector3.left * rangeRay;
 
-        if (Physics2D.Raycast(transform.position + sides + Vector3.down, Vector3.zero, 1))
+        if (Physics2D.Raycast(transform.position + sides + Vector3.down * rangeRay, Vector3.up * rangeRay, rangeRay))
         {
-            if (!Physics2D.Raycast(transform.position, sides, 1) || (Physics2D.Raycast(transform.position, sides, 1) && Physics2D.Raycast(transform.position, sides, 1).transform.tag != "Ground"))
+            if (!Physics2D.Raycast(transform.position, sides, rangeRay) || (Physics2D.Raycast(transform.position, sides, rangeRay) && Physics2D.Raycast(transform.position, sides, rangeRay).transform.tag != "Ground"))
             {
-                if (Physics2D.Raycast(transform.position + sides + Vector3.down, Vector3.zero, 1).transform.tag == "Ground")
+                if (Physics2D.Raycast(transform.position + sides + Vector3.down * rangeRay, Vector3.up * rangeRay, rangeRay).transform.tag == "Ground")
                 {
                     return true;
                 }
@@ -73,14 +77,12 @@ public class GunnerWalker : MonoBehaviour
             else return false;
         }
         else return false;
-        // Debug.Log(Physics2D.Raycast(transform.position, target.transform.position - transform.position).transform.tag);
-        // Debug.DrawRay(transform.position, target.transform.position - transform.position, Color.red);
+
     }
 
     public bool EnterGround()
     {
-       // Debug.Log();
-        if (Physics2D.Raycast(transform.position + Vector3.down, Vector3.zero, 1) && Physics2D.Raycast(transform.position + Vector3.down, Vector3.zero, 1).transform.tag == "Ground")
+        if (Physics2D.Raycast(transform.position + Vector3.down * rangeRay, Vector3.up * rangeRay, rangeRay) && Physics2D.Raycast(transform.position + Vector3.down * rangeRay, Vector3.up * rangeRay, rangeRay).transform.tag == "Ground")
         {
             return true;
         }

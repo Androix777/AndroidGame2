@@ -29,10 +29,17 @@ public class Bullet : MonoBehaviour {
 		}
 		else
 		{
-			if (collision.tag=="Hero" || collision.tag=="Ground")
+			if (collision.tag=="Hero" )
 			{
+                collision.gameObject.GetComponent<Hero>().GetDamage(damage);
 				Destroy(gameObject,0);
-			}
+			}else
+            {
+                if (collision.tag == "Ground")
+                {
+                    Destroy(gameObject, 0);
+                }
+            }
 		}
 	}
 

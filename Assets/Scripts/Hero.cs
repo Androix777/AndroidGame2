@@ -5,7 +5,7 @@ using System.Linq;
 
 public class Hero : MonoBehaviour {
     public float dist;
-    public int Hp { get; set; }
+    public float Hp { get; set; }
     public float maxSpeed { get; set; }
     public float jumpForce { get; set; }
     public int sumJumps { get; set; }
@@ -15,15 +15,19 @@ public class Hero : MonoBehaviour {
     public state mystate;
     bool grounded = false;
     Rigidbody2D rigidbodyHero;
-    int numberJump;
+    int numberJump ,timetonextdamage;
     float move;
     Animator animator;
+
+    Vector3 push;
     void Start()
     {
-        //Hp = 100;
-        //maxSpeed = 10;
-        //sumJumps = 4;
-        //jumpForce = 10;
+        Hp = 100;
+        maxSpeed = 10;
+        sumJumps = 4;
+        jumpForce = 10;
+
+
         rigidbodyHero = gameObject.GetComponent<Rigidbody2D>();
         mystate = state.stayLeft;
         animator = GetComponent<Animator>();
@@ -44,6 +48,10 @@ public class Hero : MonoBehaviour {
         
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+    }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -53,7 +61,11 @@ public class Hero : MonoBehaviour {
 
     void Update()
     {
-        
+        if (timetonextdamage > 0)
+        {
+            timetonextdamage -= 1;
+
+        }
         if (Input.GetKeyDown(KeyCode.W) && (numberJump > 0 || grounded))
         {
             rigidbodyHero.velocity = new Vector2(rigidbodyHero.velocity.x, 0);
@@ -62,7 +74,17 @@ public class Hero : MonoBehaviour {
         }
         
         move = Input.GetAxis("Horizontal");
-        rigidbodyHero.velocity = new Vector2(move * maxSpeed, rigidbodyHero.velocity.y);
+        rigidbodyHero.velocity = new Vector2( move * maxSpeed + push.x, rigidbodyHero.velocity.y + push.y);
+
+        if ((push.x > 0.7 || push.x < -0.7) && move * maxSpeed < Mathf.Abs(push.x))
+        {
+            push.x /= 1.1f;
+        }
+        else { push.x = 0; }
+        if (push.y > 0.7 || push.y < -0.7)
+        {
+            push.y /= 1.1f;
+        }else push.y = 0;
 
         CheckMyState();
     }
@@ -178,6 +200,21 @@ public class Hero : MonoBehaviour {
             }
         }
     }
+    public void GetDamage(float loss )
+    {
+        if (timetonextdamage <= 0)
+        {
+            Hp -= loss;
+            timetonextdamage = 10;
+        }
+        
+    }
+
+    public void Push(Vector3 force)
+    {
+        push = force;
+    }
+
 }
 
 

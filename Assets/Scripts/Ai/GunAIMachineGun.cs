@@ -15,6 +15,7 @@ public class GunAIMachineGun : MonoBehaviour {
         gun = gameObject;
         hero = GameObject.FindGameObjectWithTag("Hero").gameObject;
         room = GameObject.FindGameObjectWithTag("Room").gameObject;
+
     }
 
     // Update is called once per frame
@@ -47,7 +48,14 @@ public class GunAIMachineGun : MonoBehaviour {
             }
         }
 
-            
+        if (transform.rotation.eulerAngles.z > -90 && transform.rotation.eulerAngles.z < 90)
+        {
+            GetComponent<SpriteRenderer>().flipY = false;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().flipY = true;
+        }
 
 
     }
