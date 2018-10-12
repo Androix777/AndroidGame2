@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GunnerWalker : MonoBehaviour
 {
+
+    public float rangeVision;
     public float rangeRay;
 
     public int hp;
@@ -33,7 +35,6 @@ public class GunnerWalker : MonoBehaviour
         }
         if (target != null && !SeeTarget() && EnterGround())
         {
-             Debug.Log("See");
             if (!SeeBreakage(sideMob))
             {
                 sideMob = !sideMob;
@@ -51,11 +52,16 @@ public class GunnerWalker : MonoBehaviour
     public bool SeeTarget()
     {
 
-        if (Physics2D.Raycast(transform.position, target.transform.position - transform.position).transform.tag == "Ground")
+        if (Physics2D.Raycast(transform.position, target.transform.position - transform.position, rangeVision))
         {
-            return false;
+           
+            if (Physics2D.Raycast(transform.position, target.transform.position - transform.position, rangeVision).transform.tag == "Ground")
+            {
+                return false;
+            }
+            return true;
         }
-        else return true;
+        else return false;
     }
 
     public bool SeeBreakage(bool side)

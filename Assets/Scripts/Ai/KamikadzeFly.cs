@@ -17,8 +17,10 @@ public class KamikadzeFly : MonoBehaviour {
     public float damage;
     public float damageMultiplu;
 
-    public Vector3 Move;
-    public Vector3 MoveRandom;
+    public Vector3 move;
+    public Vector3 moveRandom;
+
+    int timerRandom;
 
     void Start () {
         target = GameObject.FindGameObjectWithTag ( "Hero" );
@@ -33,17 +35,21 @@ public class KamikadzeFly : MonoBehaviour {
 
         if (target!=null && SeeTarget())
         {
-            Debug.Log("See Hero");
-            Move = (target.transform.position - transform.position).normalized * speed * speedMultiplu; 
+            
+            move = (target.transform.position - transform.position).normalized * speed * speedMultiplu; 
 
         }
         else
         {
-
-            Move = new Vector3(Random.Range(-100, 100), Random.Range(-100, 100)).normalized * speed * speedMultiplu/2;
+            if (timerRandom<=0)
+            {
+                move = new Vector3(Random.Range(-100, 100), Random.Range(-100, 100)).normalized * speed * speedMultiplu / 5;
+                timerRandom = 30;
+            }
+            if (timerRandom > 0) { timerRandom -= 1; }
 
         }
-        gameObject.GetComponent<Rigidbody2D>().AddForce(Move);
+        gameObject.GetComponent<Rigidbody2D>().velocity = move;
     }
 
     public bool SeeTarget( )
@@ -66,6 +72,7 @@ public class KamikadzeFly : MonoBehaviour {
         {
             collision.gameObject.GetComponent<Hero>().GetDamage(damage);
             Vector2 imp = (collision.transform.position - transform.position).normalized * pushForce;
+            imp.y /= pushForce;
             collision.gameObject.GetComponent<Hero>().Push(imp);
         }
     }

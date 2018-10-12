@@ -57,10 +57,6 @@ public class PlayerCreator : MonoBehaviour
         cam.transform.SetParent(Player.transform);
         cam.transform.localPosition = new Vector3 (0,0,-10);
 
-       
-
-       
-
         GameObject.FindGameObjectWithTag("Generator").GetComponent<Generator>().teleportationNextRoom();
     }
 

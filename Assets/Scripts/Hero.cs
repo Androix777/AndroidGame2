@@ -43,7 +43,6 @@ public class Hero : MonoBehaviour {
 
             grounded = true;
             numberJump = sumJumps - 1;
-            //Debug.Log(collision.gameObject.name);
         }
         
     }
@@ -64,8 +63,8 @@ public class Hero : MonoBehaviour {
         if (timetonextdamage > 0)
         {
             timetonextdamage -= 1;
-
         }
+       
         if (Input.GetKeyDown(KeyCode.W) && (numberJump > 0 || grounded))
         {
             rigidbodyHero.velocity = new Vector2(rigidbodyHero.velocity.x, 0);
@@ -91,8 +90,20 @@ public class Hero : MonoBehaviour {
 
     public bool EnterGround()
     {
+        Vector3 startpos = transform.position;
+        startpos.x -= 0.4f;
 
-        RaycastHit2D[] objs = Physics2D.RaycastAll(transform.position, Vector3.down, dist);
+        RaycastHit2D[] objs = Physics2D.RaycastAll(startpos, Vector3.down, dist);
+
+        foreach (RaycastHit2D obj in objs)
+        {
+            if (obj.transform.tag == "Ground")
+            {
+                return true;
+            }
+        }
+        startpos.x += 0.4f;
+        objs = Physics2D.RaycastAll(startpos, Vector3.down, dist);
 
         foreach (RaycastHit2D obj in objs)
         {
@@ -205,10 +216,12 @@ public class Hero : MonoBehaviour {
         if (timetonextdamage <= 0)
         {
             Hp -= loss;
-            timetonextdamage = 10;
+            timetonextdamage = 30;
         }
         
     }
+
+
 
     public void Push(Vector3 force)
     {

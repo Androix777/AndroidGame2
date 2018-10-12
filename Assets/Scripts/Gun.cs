@@ -47,7 +47,6 @@ public class Gun : MonoBehaviour {
             bull.SetActive(true);
             reloaded = 100 - speedFire*speedFireMultipl;
         }
-        
 
     }
 

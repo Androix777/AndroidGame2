@@ -15,8 +15,9 @@ public class GunnerFly : MonoBehaviour {
     public float damage;
     public float damageMultiplu;
 
-    public Vector3 Move;
-    public Vector3 MoveRandom;
+    public Vector3 move;
+
+    int timerRandom;
     // Use this for initialization
     void Start () {
         target = GameObject.FindGameObjectWithTag("Hero");
@@ -29,21 +30,32 @@ public class GunnerFly : MonoBehaviour {
             Destroy(gameObject, 0);
         }
 
-        if (target != null && SeeTarget())
+        if (target != null )
         {
-            //Debug.Log("I see you");
-            MoveRandom = new Vector3(Random.Range(-100, 100), Random.Range(-100, 100)).normalized * speed * speedMultiplu / 2;
-            
+
+
+            if (timerRandom <= 0)
+            {
+                move = new Vector3(Random.Range(-100, 100), Random.Range(-100, 100)).normalized * speed * speedMultiplu / 2;
+                timerRandom = 30;
+            }
+            if (timerRandom > 0) { timerRandom -= 1; }
+
+
         }
-        
+        gameObject.GetComponent<Rigidbody2D>().velocity = move;
     }
-    public bool SeeTarget()
+    
+
+
+    private void OnCollisionStay2D(Collision2D collision)
     {
-        
-        if (Physics2D.Raycast(transform.position, target.transform.position - transform.position, rangeVision) && Physics2D.Raycast(transform.position, target.transform.position - transform.position, rangeVision).transform.tag == "Ground")
+        if (collision.transform.tag == "Hero")
         {
-            return false;
+            collision.gameObject.GetComponent<Hero>().GetDamage(damage);
+            Vector2 imp = (collision.transform.position - transform.position).normalized * 5;
+            imp.y /= 5;
+            collision.gameObject.GetComponent<Hero>().Push(imp);
         }
-        else return true;
     }
 }
