@@ -1318,7 +1318,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NumberRoom: 0
-  roomPrefab: {fileID: 1613072891587340, guid: 80fb001a914ef2648b5bbaabf011024b, type: 2}
+  roomPrefab: {fileID: 1859242879596588, guid: 80fb001a914ef2648b5bbaabf011024b, type: 2}
   loadScreen: {fileID: 0}
 --- !u!4 &1372195876
 Transform:

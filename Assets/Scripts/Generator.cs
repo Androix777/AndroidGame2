@@ -22,8 +22,8 @@ public class Generator : MonoBehaviour {
 
     public void teleportationNextRoom()
     {
-        GameObject.FindGameObjectWithTag("Hero").transform.position = new Vector3(0,-18,0);
         generationNextRoom();
+        GameObject.FindGameObjectWithTag("Hero").transform.position = GameObject.FindGameObjectWithTag("Room").transform.position;
     }
 
 

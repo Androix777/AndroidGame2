@@ -34,32 +34,23 @@ public class Hero : MonoBehaviour {
     }
 
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-       
-        if (collision.gameObject.tag == "Ground" && EnterGround())
+    private void CheakGrounded() {
+        if (EnterGround())
         {
-            
-
             grounded = true;
-            numberJump = sumJumps - 1;
+            numberJump = sumJumps;
+ 
         }
-        
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        grounded = false;
+        else { grounded = false;  }
     }
 
 
     void Update()
     {
+
+        Debug.DrawRay(transform.position, Vector3.down, Color.red, dist);
+        CheakGrounded();
+
         if (timetonextdamage > 0)
         {
             timetonextdamage -= 1;
@@ -86,29 +77,35 @@ public class Hero : MonoBehaviour {
         }else push.y = 0;
 
         CheckMyState();
+
+
     }
 
     public bool EnterGround()
     {
         Vector3 startpos = transform.position;
-        startpos.x -= 0.4f;
-
+        startpos.x -= 0.3f;
         RaycastHit2D[] objs = Physics2D.RaycastAll(startpos, Vector3.down, dist);
 
         foreach (RaycastHit2D obj in objs)
         {
             if (obj.transform.tag == "Ground")
             {
+                Debug.Log("L");
                 return true;
             }
         }
-        startpos.x += 0.4f;
+
+        startpos = transform.position;
+        startpos.x += 0.3f;
+
         objs = Physics2D.RaycastAll(startpos, Vector3.down, dist);
 
         foreach (RaycastHit2D obj in objs)
         {
             if (obj.transform.tag == "Ground")
             {
+                Debug.Log("R");
                 return true;
             }
         }
