@@ -22,11 +22,19 @@ public class Bullet : MonoBehaviour {
 	{
 		if (ally)
 		{
-			if (collision.tag=="Enemy" || collision.tag=="Ground")
+			if (collision.tag=="Enemy" )
 			{
-				Destroy(gameObject,0);
+                collision.gameObject.GetComponent<Сreature>().GetDamage(damage);
+                Destroy(gameObject,0);
 			}
-		}
+            else
+            {
+                if (collision.tag == "Ground")
+                {
+                    Destroy(gameObject, 0);
+                }
+            }
+        }
 		else
 		{
 			if (collision.tag=="Hero" )

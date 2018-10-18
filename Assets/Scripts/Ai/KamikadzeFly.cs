@@ -3,20 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class KamikadzeFly : MonoBehaviour {
+public class KamikadzeFly : Сreature
+{
     public float pushForce;
-    public float rangeVision;
-
-    public int hp;
-    public int hpMultiplu;
-
-    GameObject target;
-    public float speed;
-    public float speedMultiplu;
-
-    public float damage;
-    public float damageMultiplu;
-
     public Vector3 move;
     public Vector3 moveRandom;
 

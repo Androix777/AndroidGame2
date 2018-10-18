@@ -2,22 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeUnit : MonoBehaviour {
+public class MeleeUnit : Сreature
+{
 
     public float pushForce;
-
-    public int hp;
-    public int hpMultiplu;
-
-    public int rangeVision;
     public float rangeRay;
-
-    GameObject target;
-    public float speed;
-    public float speedMultiplu;
-
-    public float damage;
-    public float damageMultiplu;
 
     public bool sideMob = true;
 

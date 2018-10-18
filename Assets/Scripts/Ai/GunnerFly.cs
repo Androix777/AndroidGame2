@@ -2,18 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunnerFly : MonoBehaviour {
-    public float rangeVision;
-
-    public int hp;
-    public int hpMultiplu;
-
-    GameObject target;
-    public float speed;
-    public float speedMultiplu;
-
-    public float damage;
-    public float damageMultiplu;
+public class GunnerFly : Сreature
+{
 
     public Vector3 move;
 

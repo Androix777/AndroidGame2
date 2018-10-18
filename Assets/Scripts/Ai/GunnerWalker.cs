@@ -2,21 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GunnerWalker : MonoBehaviour
+public class GunnerWalker : Сreature
 {
 
-    public float rangeVision;
     public float rangeRay;
-
-    public int hp;
-    public int hpMultiplu;
-
-    GameObject target;
-    public float speed;
-    public float speedMultiplu;
-
-    public float damage;
-    public float damageMultiplu;
 
     public bool sideMob = true;
 
