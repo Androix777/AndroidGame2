@@ -3,20 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomControl : MonoBehaviour {
-    GameObject[] sectorRoom;
-    int numberSector = 0;
-    int childCount;
+    GameObject[] effectsRoom;
     // Use this for initialization
     void Start () {
-        childCount = gameObject.transform.childCount;
-        sectorRoom = new GameObject[childCount];
-        for (int i = 0; i < childCount; i++)
-        {
 
-            sectorRoom[i] = gameObject.transform.GetChild(i).gameObject;
-        }
 
-        GenerateNextSector();
     }
 	
 	// Update is called once per frame
@@ -24,13 +15,40 @@ public class RoomControl : MonoBehaviour {
 		
 	}
 
-    public void GenerateNextSector()
+    public void GenerateRoom(int difficult)
     {
-        if (numberSector < childCount)
+        bool cheak = false;
+              
+        for (int i = 0; i < difficult; i++)
         {
-            sectorRoom[numberSector].SetActive(true);
-            numberSector++;
+            foreach (GameObject g in effectsRoom)
+            {
+                if (!g.activeSelf)
+                {
+                    cheak = true;
+                }
+            }
+            if (cheak)
+            {
+                cheak = false;
+
+                int rand = Random.Range(0, effectsRoom.Length);
+
+                while (true)
+                {
+                    if (effectsRoom[rand].activeSelf)
+                    {
+                        rand = Random.Range(0, effectsRoom.Length);
+                    }
+                    else
+                    {
+                        effectsRoom[rand].SetActive(true);
+                        break;
+                    }
+                }
+            }
         }
     }
+
 
 }

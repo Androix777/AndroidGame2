@@ -78,7 +78,16 @@ public class Hero : MonoBehaviour {
 
         CheckMyState();
 
+        if (Hp <= 0)
+        {
+            DeadHero();
+        }
+    }
 
+    public void DeadHero()
+    {
+        GameObject.FindGameObjectWithTag("ControlCam").GetComponent<CameraControl>().deadHero();
+        Destroy(gameObject, 0);
     }
 
     public bool EnterGround()

@@ -11,6 +11,7 @@ TagManager:
   - Undefined
   - Hero
   - Enemy
+  - ControlCam
   layers:
   - Default
   - TransparentFX

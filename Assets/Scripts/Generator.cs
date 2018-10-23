@@ -8,17 +8,23 @@ public class Generator : MonoBehaviour {
     public GameObject roomPrefab;
     public GameObject loadScreen;
 
+    
     GameObject room;
 
+    public GameObject[] roomsMetal;
+
+    public Object[] pullrooms;
+
+    public string  location = "Metal";
 	// Use this for initialization
 	void Start () {
         //teleportationNextRoom();
-	}
+        LoadPullRooms();
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+    }
 
     public void teleportationNextRoom()
     {
@@ -33,13 +39,17 @@ public class Generator : MonoBehaviour {
         {
             Destroy(room, 0);
         }
-       
+        
+        room = Instantiate(pullrooms[Random.Range(0, pullrooms.Length)], gameObject.transform.position, gameObject.transform.rotation) as GameObject;
+        room.SetActive(true);
 
-       room=Instantiate(roomPrefab,gameObject.transform.position,gameObject.transform.rotation) as GameObject;
-       room.SetActive(true);
+        
     }
 
 
-
+    public void LoadPullRooms()
+    {
+        pullrooms = Resources.LoadAll("Rooms/Metal/Easy") ;
+    }
 
 }

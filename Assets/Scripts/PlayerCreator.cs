@@ -52,12 +52,10 @@ public class PlayerCreator : MonoBehaviour
         gun.GetComponent<Gun>().ally = true;
         gun.SetActive(true);
         gun.GetComponent<GunAIHero>().gun=gun;
-
-        GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
-        cam.transform.SetParent(Player.transform);
-        cam.transform.localPosition = new Vector3 (0,0,-10);
-
+      
         GameObject.FindGameObjectWithTag("Generator").GetComponent<Generator>().teleportationNextRoom();
+
+        GameObject.FindGameObjectWithTag("ControlCam").GetComponent<CameraControl>().startLvl();
     }
 
    
