@@ -1322,7 +1322,7 @@ MonoBehaviour:
   loadScreen: {fileID: 0}
   roomsMetal:
   - {fileID: 1859242879596588, guid: 80fb001a914ef2648b5bbaabf011024b, type: 2}
-  roomstest: []
+  pullrooms: []
   location: Metal
 --- !u!4 &1372195876
 Transform:

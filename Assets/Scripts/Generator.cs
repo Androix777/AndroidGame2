@@ -8,7 +8,7 @@ public class Generator : MonoBehaviour {
     public GameObject roomPrefab;
     public GameObject loadScreen;
 
-    
+    public int floor = 0;
     GameObject room;
 
     public GameObject[] roomsMetal;
@@ -30,6 +30,7 @@ public class Generator : MonoBehaviour {
     {
         generationNextRoom();
         GameObject.FindGameObjectWithTag("Hero").transform.position = GameObject.FindGameObjectWithTag("Room").transform.position;
+        floor++;
     }
 
 
