@@ -12,6 +12,7 @@ public class Hero : MonoBehaviour {
 
     public enum state { flyRight,fallRight,moveRight, stayRight, flyLeft, fallLeft, moveLeft, stayLeft }
 
+    public float ray;
     public state mystate;
     bool grounded = false;
     Rigidbody2D rigidbodyHero;
@@ -23,9 +24,9 @@ public class Hero : MonoBehaviour {
     void Start()
     {
         Hp = 100;
-        maxSpeed = 10;
-        sumJumps = 4;
-        jumpForce = 10;
+        maxSpeed = 7;
+        sumJumps = 2;
+        jumpForce = 11;
 
 
         rigidbodyHero = gameObject.GetComponent<Rigidbody2D>();
@@ -93,7 +94,8 @@ public class Hero : MonoBehaviour {
     public bool EnterGround()
     {
         Vector3 startpos = transform.position;
-        startpos.x -= 0.3f;
+        startpos.x -= ray;
+
         RaycastHit2D[] objs = Physics2D.RaycastAll(startpos, Vector3.down, dist);
 
         foreach (RaycastHit2D obj in objs)
@@ -106,7 +108,7 @@ public class Hero : MonoBehaviour {
         }
 
         startpos = transform.position;
-        startpos.x += 0.3f;
+        startpos.x += ray;
 
         objs = Physics2D.RaycastAll(startpos, Vector3.down, dist);
 

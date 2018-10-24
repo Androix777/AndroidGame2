@@ -33,12 +33,12 @@ public class MeleeUnit : Сreature
             }
             if (SeeTarget(sideMob))
             {
-
+                Debug.Log("See");
                 gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(speed * speedMultiplu, gameObject.GetComponent<Rigidbody2D>().velocity.y);
             }
             else
             {
-                
+                 Debug.Log("!See");
                 gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(speed * speedMultiplu / 2, gameObject.GetComponent<Rigidbody2D>().velocity.y);
             }           
         }
