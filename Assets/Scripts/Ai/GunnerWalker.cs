@@ -61,17 +61,17 @@ public class GunnerWalker : Сreature
 
         if (Physics2D.Raycast(transform.position + sides + Vector3.down * rangeRay, Vector3.up * rangeRay, rangeRay))
         {
-            if (!Physics2D.Raycast(transform.position, sides, rangeRay) || (Physics2D.Raycast(transform.position, sides, rangeRay) && Physics2D.Raycast(transform.position, sides, rangeRay).transform.tag != "Ground"))
+            RaycastHit2D onTheSide = Physics2D.Raycast(transform.position + sides * rangeRay, -sides, rangeRay);
+            if (onTheSide && (onTheSide.transform.tag == "Hero" || onTheSide.transform.gameObject == gameObject))
             {
-                if (Physics2D.Raycast(transform.position + sides + Vector3.down * rangeRay, Vector3.up * rangeRay, rangeRay).transform.tag == "Ground")
+                if (Physics2D.Raycast(transform.position + sides * rangeRay + Vector3.down, Vector3.up, rangeRay).transform.tag == "Ground")
                 {
                     return true;
                 }
-                else return false;
             }
-            else return false;
         }
-        else return false;
+
+        return false;
 
     }
 

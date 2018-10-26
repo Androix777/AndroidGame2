@@ -10,6 +10,7 @@ public class MeleeUnit : Сreature
 
     public bool sideMob = true;
 
+    public bool seeHero;
     // Use this for initialization
     void Start () {
         target = GameObject.FindGameObjectWithTag("Hero");
@@ -25,20 +26,21 @@ public class MeleeUnit : Сreature
         if (target != null && EnterGround())
         {
 
-            if (!SeeBreakage(sideMob))
-            {
-
-                sideMob = !sideMob;
-                speed *= -1;
-            }
+            
             if (SeeTarget(sideMob))
             {
-                Debug.Log("See");
+                seeHero = true;
                 gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(speed * speedMultiplu, gameObject.GetComponent<Rigidbody2D>().velocity.y);
             }
             else
             {
-                 Debug.Log("!See");
+                seeHero = false;
+                if (!SeeBreakage(sideMob))
+                {
+
+                    sideMob = !sideMob;
+                    speed *= -1;
+                }
                 gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(speed * speedMultiplu / 2, gameObject.GetComponent<Rigidbody2D>().velocity.y);
             }           
         }
@@ -57,17 +59,17 @@ public class MeleeUnit : Сreature
 
         if (Physics2D.Raycast(transform.position + sides + Vector3.down * rangeRay, Vector3.up * rangeRay, rangeRay))
         {
-            if (!Physics2D.Raycast(transform.position, sides, rangeRay) || (Physics2D.Raycast(transform.position, sides, rangeRay) && Physics2D.Raycast(transform.position, sides, rangeRay).transform.tag != "Ground"))
+            RaycastHit2D onTheSide = Physics2D.Raycast(transform.position + sides * rangeRay, -sides, rangeRay);
+            if (onTheSide && (onTheSide.transform.tag == "Hero" || onTheSide.transform.gameObject == gameObject))
             {
-                if (Physics2D.Raycast(transform.position + sides + Vector3.down * rangeRay, Vector3.up * rangeRay, rangeRay).transform.tag == "Ground")
-                {
-                    return true;
-                }
-                else return false;
+                 if (Physics2D.Raycast(transform.position + sides * rangeRay + Vector3.down, Vector3.up, rangeRay).transform.tag == "Ground")
+                 {
+                      return true;
+                 }
             }
-            else return false;
         }
-        else return false;
+
+        return false;
 
     }
 
@@ -94,18 +96,34 @@ public class MeleeUnit : Сreature
 
         for (int i = 1; i < rangeVision; i++)
         {
-            RaycastHit2D hitGround = Physics2D.Raycast(new Vector3(transform.position.x + i * sideint, transform.position.y - 1, transform.position.z), Vector3.up, 1);
-            if (hitGround && hitGround.transform.tag == "Ground" )
+            RaycastHit2D hitHero = Physics2D.Raycast(new Vector3(transform.position.x + i * sideint, transform.position.y , transform.position.z), Vector3.right * -sideint, i);
+            if (hitHero )
             {
-                RaycastHit2D hitHero = Physics2D.Raycast(transform.position, Vector3.right * sideint, i);
-                if ( hitHero && hitHero.transform.tag == "Hero")
+                Debug.Log(hitHero.transform.tag);
+                if (hitHero.transform.tag != "Hero")
                 {
-                    return true;
+                   if (hitHero != gameObject)
+                    {
+                        break;
+                    }
                 }
+                else
+                {
+                    RaycastHit2D hitGround = Physics2D.Raycast(new Vector3(transform.position.x + i * sideint, transform.position.y - 1, transform.position.z), Vector3.up, 1);
+                    if (hitGround && hitGround.transform.tag == "Ground")
+                    {
+                        return true;
+                    }
+                }
+                
             }
             else
             {
-                break;
+                RaycastHit2D hitGround = Physics2D.Raycast(new Vector3(hitHero.transform.position.x + i * sideint, hitHero.transform.position.y-1, hitHero.transform.position.z), Vector3.up , 1);
+                if (!hitGround || hitGround.transform.tag != "Ground")
+                {
+                    break;
+                }               
             }
         }
         return false;
