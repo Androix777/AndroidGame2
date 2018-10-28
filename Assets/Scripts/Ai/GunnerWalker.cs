@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GunnerWalker : Сreature
 {
-
+    public  bool seeHero = false;
     public float rangeRay;
-
+    int timerToNoSee = 0;
     public bool sideMob = true;
 
     // Use this for initialization
@@ -18,18 +18,35 @@ public class GunnerWalker : Сreature
     // Update is called once per frame
     void Update()
     {
-        if (hp <= 0)
+        if (target != null && EnterGround())
         {
-            Destroy(gameObject, 0);
-        }
-        if (target != null && !SeeTarget() && EnterGround())
-        {
-            if (!SeeBreakage(sideMob))
+
+
+            if (SeeTarget())
             {
-                sideMob = !sideMob;
-                speed *= -1;
+                seeHero = true;
+                timerToNoSee = 30;
+                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, gameObject.GetComponent<Rigidbody2D>().velocity.y);
             }
-            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(speed * speedMultiplu, gameObject.GetComponent<Rigidbody2D>().velocity.y);
+            else
+            {
+                seeHero = false;
+                if (timerToNoSee == 0)
+                {
+                    if (!SeeBreakage(sideMob))
+                    {
+
+                        sideMob = !sideMob;
+                        speed *= -1;
+                    }
+                    gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(speed * speedMultiplu, gameObject.GetComponent<Rigidbody2D>().velocity.y);
+                }
+                else
+                {
+                    timerToNoSee -= 1;
+                    gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(speed * speedMultiplu, gameObject.GetComponent<Rigidbody2D>().velocity.y);
+                }
+            }
         }
         else
         {
@@ -40,17 +57,23 @@ public class GunnerWalker : Сreature
 
     public bool SeeTarget()
     {
-
-        if (Physics2D.Raycast(transform.position, target.transform.position - transform.position, rangeVision))
+        RaycastHit2D[] rays = Physics2D.RaycastAll(transform.position, target.transform.position - transform.position, rangeVision);
+        
+        foreach (RaycastHit2D obj in rays)
         {
-           
-            if (Physics2D.Raycast(transform.position, target.transform.position - transform.position, rangeVision).transform.tag == "Ground")
+            if (obj.transform.tag == "Ground" )
             {
                 return false;
             }
-            return true;
+            else
+            {
+                if (obj.transform.tag == "Hero")
+                {
+                    return true;
+                }
+            }
         }
-        else return false;
+        return false;
     }
 
     public bool SeeBreakage(bool side)

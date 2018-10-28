@@ -44,7 +44,12 @@ public class Gun : MonoBehaviour {
             bull.GetComponent<Bullet>().ally = ally;
             bull.GetComponent<Bullet>().speed = speedBullet;
             bull.GetComponent<Bullet>().moveVector = moveVector;
+            if (transform.parent.GetComponent<SpriteRenderer>() != null){
+                bull.GetComponent<SpriteRenderer>().color = transform.parent.GetComponent<SpriteRenderer>().color;
+            }
+           
             bull.SetActive(true);
+
             reloaded = 100 - speedFire*speedFireMultipl;
         }
 

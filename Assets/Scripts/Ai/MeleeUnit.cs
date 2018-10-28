@@ -7,7 +7,7 @@ public class MeleeUnit : Сreature
 
     public float pushForce;
     public float rangeRay;
-
+    int timerToNoSee = 0;
     public bool sideMob = true;
 
     public bool seeHero;
@@ -29,26 +29,33 @@ public class MeleeUnit : Сreature
             
             if (SeeTarget(sideMob))
             {
+                timerToNoSee = 30;
                 seeHero = true;
                 gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(speed * speedMultiplu, gameObject.GetComponent<Rigidbody2D>().velocity.y);
             }
             else
-            {
-                seeHero = false;
-                if (!SeeBreakage(sideMob))
+            {   if (timerToNoSee == 0)
                 {
+                    seeHero = false;
+                    if (!SeeBreakage(sideMob))
+                    {
 
-                    sideMob = !sideMob;
-                    speed *= -1;
+                        sideMob = !sideMob;
+                        speed *= -1;
+                    }
+                    gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(speed * speedMultiplu / 2, gameObject.GetComponent<Rigidbody2D>().velocity.y);
                 }
-                gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(speed * speedMultiplu / 2, gameObject.GetComponent<Rigidbody2D>().velocity.y);
+            else
+                {
+                    timerToNoSee -= 1;
+                    gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(speed * speedMultiplu, gameObject.GetComponent<Rigidbody2D>().velocity.y);
+                }
             }           
         }
         else
         {
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, gameObject.GetComponent<Rigidbody2D>().velocity.y);
         }
-
     }
 
     public bool SeeBreakage(bool side)
@@ -96,7 +103,30 @@ public class MeleeUnit : Сreature
 
         for (int i = 1; i < rangeVision; i++)
         {
-            RaycastHit2D hitHero = Physics2D.Raycast(new Vector3(transform.position.x + i * sideint, transform.position.y , transform.position.z), Vector3.right * -sideint, i);
+            RaycastHit2D[] hitHero = Physics2D.RaycastAll(transform.position, Vector3.right * sideint, i);
+
+            foreach (RaycastHit2D hitray in hitHero)
+            {
+                //Debug.Log(hitray.transform.tag);
+                if ((hitray.transform.tag != "Hero" && hitray != gameObject) || hitray.transform.tag == "Ground")
+                {
+                    return false;
+                }
+                else
+                {
+                    if (hitray.transform.tag == "Hero")
+                    {
+                        RaycastHit2D hitGround = Physics2D.Raycast(new Vector3(hitray.transform.position.x + i * sideint, hitray.transform.position.y - 1, hitray.transform.position.z), Vector3.up, 1);
+                        if (!hitGround || hitGround.transform.tag != "Ground")
+                        {
+                            return false;
+                        }
+                        return true;
+                    }
+                }
+            }
+
+           /* RaycastHit2D hitHero = Physics2D.Raycast(new Vector3(transform.position.x + i * sideint, transform.position.y , transform.position.z), Vector3.right * -sideint, i);
             if (hitHero )
             {
                 Debug.Log(hitHero.transform.tag);
@@ -104,7 +134,7 @@ public class MeleeUnit : Сreature
                 {
                    if (hitHero != gameObject)
                     {
-                        break;
+                        return false ;
                     }
                 }
                 else
@@ -124,7 +154,7 @@ public class MeleeUnit : Сreature
                 {
                     break;
                 }               
-            }
+            }*/
         }
         return false;
     }

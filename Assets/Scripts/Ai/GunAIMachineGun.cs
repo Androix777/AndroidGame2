@@ -12,6 +12,7 @@ public class GunAIMachineGun : MonoBehaviour {
     public float angleView;
     public float angleStart;
 
+
     // Use this for initialization
     void Start() {
         gun = gameObject;
@@ -22,60 +23,71 @@ public class GunAIMachineGun : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        Vector3 difference = target.transform.position - transform.position;
-        float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-        rotationZ = (361 + rotationZ) % 361;
-        float minAngle = (361 + angleStart - angleView) % 361;
-        float maxAngle = (361 + angleStart + angleView) % 361;
-
-        if (SeeTarget())
+        if (target != null)
         {
-            if (maxAngle < angleStart || minAngle > angleStart)
+            Vector3 difference = target.transform.position - transform.position;
+            float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
+            rotationZ = (361 + rotationZ) % 361;
+            float minAngle = (361 + angleStart - angleView) % 361;
+            float maxAngle = (361 + angleStart + angleView) % 361;
+            if (SeeTarget())
             {
-                if (rotationZ <= maxAngle && rotationZ >= 0 || rotationZ <= 360 && rotationZ >= minAngle)
+                if (maxAngle < angleStart || minAngle > angleStart)
                 {
+                    if (rotationZ <= maxAngle && rotationZ >= 0 || rotationZ <= 360 && rotationZ >= minAngle)
+                    {
 
-                    gun.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
-                    gun.GetComponent<Gun>().Fire(difference.normalized);
+                        gun.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
+                        gun.GetComponent<Gun>().Fire(difference.normalized);
+                    }
                 }
+                else
+                {
+                    if (rotationZ <= maxAngle && rotationZ >= angleStart || rotationZ <= maxAngle && rotationZ >= minAngle)
+                    {
+                        gun.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
+                        gun.GetComponent<Gun>().Fire(difference.normalized);
+                    }
+                }
+            }
+
+            if (transform.rotation.eulerAngles.z > -90 && transform.rotation.eulerAngles.z < 90)
+            {
+                GetComponent<SpriteRenderer>().flipY = false;
             }
             else
             {
-                if (rotationZ <= maxAngle && rotationZ >= angleStart || rotationZ <= maxAngle && rotationZ >= minAngle)
-                {
-                    gun.transform.rotation = Quaternion.Euler(0.0f, 0.0f, rotationZ);
-                    gun.GetComponent<Gun>().Fire(difference.normalized);
-                }
+                GetComponent<SpriteRenderer>().flipY = true;
             }
         }
+        
 
-        if (transform.rotation.eulerAngles.z > -90 && transform.rotation.eulerAngles.z < 90)
-        {
-            GetComponent<SpriteRenderer>().flipY = false;
-        }
-        else
-        {
-            GetComponent<SpriteRenderer>().flipY = true;
-        }
+        
 
 
     }
-    
+
 
     public bool SeeTarget()
+    {
+        RaycastHit2D[] rays = Physics2D.RaycastAll(transform.position, target.transform.position - transform.position, rangeVision);
+
+        foreach (RaycastHit2D obj in rays)
         {
-
-            if (Physics2D.Raycast(transform.position, target.transform.position - transform.position, rangeVision) )
+            if (obj.transform.tag == "Ground")
             {
-
-                if ( Physics2D.Raycast(transform.position, target.transform.position - transform.position, rangeVision).transform.tag == "Ground")
-                 {
                 return false;
-                 }
-             return true;
             }
-            else return false;
+            else
+            {
+                if (obj.transform.tag == "Hero")
+                {
+                    return true;
+                }
+            }
         }
-    
+        return false;
+    }
+
 }
 

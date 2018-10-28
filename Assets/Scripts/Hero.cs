@@ -10,7 +10,7 @@ public class Hero : MonoBehaviour {
     public float jumpForce { get; set; }
     public int sumJumps { get; set; }
 
-    public enum state { flyRight,fallRight,moveRight, stayRight, flyLeft, fallLeft, moveLeft, stayLeft }
+    public enum state { fly,moveRight, moveLeft, stay }
 
     public float ray;
     public state mystate;
@@ -19,7 +19,7 @@ public class Hero : MonoBehaviour {
     int numberJump ,timetonextdamage;
     float move;
     Animator animator;
-
+    public SpriteRenderer sprite;
     Vector3 push;
     void Start()
     {
@@ -30,7 +30,7 @@ public class Hero : MonoBehaviour {
 
 
         rigidbodyHero = gameObject.GetComponent<Rigidbody2D>();
-        mystate = state.stayLeft;
+        mystate = state.stay;
         animator = GetComponent<Animator>();
     }
 
@@ -49,7 +49,7 @@ public class Hero : MonoBehaviour {
     void Update()
     {
 
-        Debug.DrawRay(transform.position, Vector3.down, Color.red, dist);
+        //Debug.DrawRay(transform.position, Vector3.down, Color.red, dist);
         CheakGrounded();
 
         if (timetonextdamage > 0)
@@ -95,7 +95,7 @@ public class Hero : MonoBehaviour {
     {
         Vector3 startpos = transform.position;
         startpos.x -= ray;
-
+        Debug.DrawRay(startpos, Vector3.down, Color.yellow, dist);
         RaycastHit2D[] objs = Physics2D.RaycastAll(startpos, Vector3.down, dist);
 
         foreach (RaycastHit2D obj in objs)
@@ -109,7 +109,7 @@ public class Hero : MonoBehaviour {
 
         startpos = transform.position;
         startpos.x += ray;
-
+        Debug.DrawRay(startpos, Vector3.down, Color.green, dist);
         objs = Physics2D.RaycastAll(startpos, Vector3.down, dist);
 
         foreach (RaycastHit2D obj in objs)
@@ -130,93 +130,47 @@ public class Hero : MonoBehaviour {
         {
             if (rigidbodyHero.velocity.x > 0)
             {
+                sprite.gameObject.transform.rotation = transform.rotation;
                 mystate = state.moveRight;
-                GetComponent<SpriteRenderer>().flipX = true;
+                sprite.flipX = true;
                 animator.SetInteger("mode", 1);
             }
             else
             if (rigidbodyHero.velocity.x < 0)
             {
+                sprite.transform.rotation = transform.rotation;
                 mystate = state.moveLeft;
-                GetComponent<SpriteRenderer>().flipX = false;
+                sprite.flipX = false;
                 animator.SetInteger("mode", 1);
             }
             else
             if (rigidbodyHero.velocity.x == 0)
             {
+                sprite.transform.rotation = transform.rotation;
                 animator.SetInteger("mode", 0);
-                if (mystate == state.moveLeft || mystate == state.flyLeft || mystate == state.fallLeft || mystate == state.stayLeft)
+                if (mystate == state.moveLeft)
                 {
-                    mystate = state.stayLeft;
-                    GetComponent<SpriteRenderer>().flipX = false;
+                    mystate = state.stay;
+                    sprite.flipX = false;
                 }
                 else
                 {
-                    mystate = state.stayRight;
-                    GetComponent<SpriteRenderer>().flipX = true;
+                    mystate = state.stay;
+                    sprite.flipX = true;
                 }
             }
         }
         else
         {
-            if (rigidbodyHero.velocity.y > 0)
+            if (rigidbodyHero.velocity.y != 0)
             {
                 animator.SetInteger("mode", 2);
-                if (rigidbodyHero.velocity.x > 0)
-                {
-                    mystate = state.flyRight;
-                    GetComponent<SpriteRenderer>().flipX = true;
-                }
-                else
-                if (rigidbodyHero.velocity.x < 0)
-                {
-                    mystate = state.flyLeft;
-                    GetComponent<SpriteRenderer>().flipX = false;
-                }
-
-                if (rigidbodyHero.velocity.x == 0)
-                {
-                    if (mystate == state.moveLeft || mystate == state.flyLeft || mystate == state.fallLeft || mystate == state.stayLeft)
-                    {
-                        mystate = state.flyLeft;
-                        GetComponent<SpriteRenderer>().flipX = false;
-                    }
-                    else
-                    {
-                        mystate = state.flyRight;
-                        GetComponent<SpriteRenderer>().flipX = true;
-                    }
-                }
-            }
-            else
-            {
-                animator.SetInteger("mode", 3);
-                if (rigidbodyHero.velocity.x > 0)
-                {
-                    mystate = state.fallRight;
-                    GetComponent<SpriteRenderer>().flipX = true;
-                }
-                else
-                if (rigidbodyHero.velocity.x < 0)
-                {
-                    mystate = state.fallLeft;
-                    GetComponent<SpriteRenderer>().flipX = false;
-                }
-                else
-                if (rigidbodyHero.velocity.x == 0)
-                {
-                    if (mystate == state.moveLeft || mystate == state.flyLeft || mystate == state.fallLeft || mystate == state.stayLeft)
-                    {
-                        mystate = state.fallLeft;
-                        GetComponent<SpriteRenderer>().flipX = false;
-                    }
-                    else
-                    {
-                        mystate = state.fallRight;
-                        GetComponent<SpriteRenderer>().flipX = true;
-                    }
-                }
-            }
+                mystate = state.fly;
+                sprite.flipX = false;
+                Vector3 moveVector = new Vector3(rigidbodyHero.velocity.x, rigidbodyHero.velocity.y,0);
+                moveVector = moveVector.normalized;
+                sprite.transform.rotation = Quaternion.LookRotation(Vector3.forward, moveVector);
+            }           
         }
     }
     public void GetDamage(float loss )
