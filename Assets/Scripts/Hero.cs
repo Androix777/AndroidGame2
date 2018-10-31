@@ -25,7 +25,7 @@ public class Hero : MonoBehaviour {
     {
         Hp = 100;
         maxSpeed = 7;
-        sumJumps = 2;
+        sumJumps = 1;
         jumpForce = 11;
 
 
@@ -61,7 +61,8 @@ public class Hero : MonoBehaviour {
         {
             rigidbodyHero.velocity = new Vector2(rigidbodyHero.velocity.x, 0);
             rigidbodyHero.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            numberJump -= 1;
+            if (!grounded) {
+                numberJump -= 1; }
         }
         
         move = Input.GetAxis("Horizontal");
@@ -102,7 +103,7 @@ public class Hero : MonoBehaviour {
         {
             if (obj.transform.tag == "Ground")
             {
-                Debug.Log("L");
+                //Debug.Log("L");
                 return true;
             }
         }
@@ -116,7 +117,7 @@ public class Hero : MonoBehaviour {
         {
             if (obj.transform.tag == "Ground")
             {
-                Debug.Log("R");
+                //Debug.Log("R");
                 return true;
             }
         }

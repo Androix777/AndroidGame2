@@ -29,7 +29,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4405343679544144
 Transform:
   m_ObjectHideFlags: 1
@@ -99,16 +99,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dd23c5b94eae8b48ae661e6fccab555, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 15
+  rangeVision: 10
   hp: 1
   hpMultiplu: 0
-  rangeVision: 10
-  rangeRay: 0.65
   speed: 5
   speedMultiplu: 1
   damage: 5
   damageMultiplu: 1
+  pushForce: 15
+  rangeRay: 0.65
   sideMob: 1
+  seeHero: 0
 --- !u!212 &212509692824498678
 SpriteRenderer:
   m_ObjectHideFlags: 1

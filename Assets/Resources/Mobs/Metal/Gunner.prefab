@@ -66,7 +66,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4030141126600010
 Transform:
   m_ObjectHideFlags: 1
@@ -214,13 +214,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeVision: 10
-  rangeRay: 0.6
   hp: 1
   hpMultiplu: 1
   speed: 2
   speedMultiplu: 2
   damage: 2
   damageMultiplu: 2
+  seeHero: 0
+  rangeRay: 0.6
   sideMob: 1
 --- !u!114 &114370265516397576
 MonoBehaviour:

@@ -42,7 +42,7 @@ public class GunnerFly : Сreature
     {
         if (collision.transform.tag == "Hero")
         {
-            collision.gameObject.GetComponent<Hero>().GetDamage(damage);
+            collision.gameObject.GetComponent<Hero>().GetDamage(meleeDamage);
             Vector2 imp = (collision.transform.position - transform.position).normalized * 5;
             imp.y /= 5;
             collision.gameObject.GetComponent<Hero>().Push(imp);

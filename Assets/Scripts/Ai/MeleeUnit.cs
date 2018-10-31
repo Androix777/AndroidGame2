@@ -164,7 +164,7 @@ public class MeleeUnit : Сreature
     {
         if (collision.transform.tag == "Hero")
         {
-            collision.gameObject.GetComponent<Hero>().GetDamage(damage);
+            collision.gameObject.GetComponent<Hero>().GetDamage(meleeDamage);
             Vector2 imp= (collision.transform.position - transform.position).normalized * pushForce;
             imp.y /= pushForce;
             collision.gameObject.GetComponent<Hero>().Push(imp);

@@ -12,7 +12,8 @@ public class Сreature : MonoBehaviour {
     public float speed;
     public float speedMultiplu;
 
-    public float damage;
+    public float rangedamage;
+    public float meleeDamage;
     public float damageMultiplu;
     // Use this for initialization
     void Start () {
