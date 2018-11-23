@@ -40,10 +40,7 @@ public class Gun : MonoBehaviour {
             GameObject bull = Instantiate(bullet, transform.position, transform.rotation);
             bull.transform.SetParent(GameObject.FindGameObjectWithTag("Room").transform);
             Destroy(bull, 5);
-            bull.GetComponent<Bullet>().damage = damage * damageMultipl;
-            bull.GetComponent<Bullet>().ally = ally;
-            bull.GetComponent<Bullet>().speed = speedBullet;
-            bull.GetComponent<Bullet>().moveVector = moveVector;
+            bullet.GetComponent<Bullet>().CreateBullet(ally, damage * damageMultipl, speedBullet, moveVector);
             if (transform.parent.GetComponent<SpriteRenderer>() != null){
                 bull.GetComponent<SpriteRenderer>().color = transform.parent.GetComponent<SpriteRenderer>().color;
             }

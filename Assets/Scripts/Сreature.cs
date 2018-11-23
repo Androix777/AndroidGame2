@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Сreature : MonoBehaviour {
     public float rangeVision;
-
+    public int maxhp;
     public int hp;
     public int hpMultiplu;
     protected GameObject target;

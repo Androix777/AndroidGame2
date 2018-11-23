@@ -61,10 +61,6 @@ public class GunAIMachineGun : MonoBehaviour {
             }
         }
         
-
-        
-
-
     }
 
 

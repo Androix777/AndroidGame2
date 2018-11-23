@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-	public bool ally { private get; set; }
-	public float damage { private get; set; }
-    public float speed { private get; set; }
-    public Vector3 moveVector { private get; set; }
+     protected bool ally;
+     protected float damage;
+     protected float speed;
+     protected Vector3 moveVector;
     // Use this for initialization
     void Start () {
         gameObject.GetComponent<Rigidbody2D>().AddForce(speed * moveVector);
@@ -18,7 +18,14 @@ public class Bullet : MonoBehaviour {
 		
 	}
 
-	private void OnTriggerEnter2D(Collider2D collision)
+    public Vector3 MoveUp()
+    {
+
+        return transform.TransformPoint(Vector3.up);
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (ally)
 		{
@@ -51,5 +58,12 @@ public class Bullet : MonoBehaviour {
 		}
 	}
 
+    public void CreateBullet(bool newally,float newdamage,float newspeed,Vector3 newmoveVector)
+    {
+         ally = newally;
+         damage = newdamage;
+         speed = newspeed;
+         moveVector = newmoveVector;
+    }
 
 }
