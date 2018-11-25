@@ -22,8 +22,8 @@ public class CreatorMob : MonoBehaviour {
 
     public void BattleBegin()
     {
-        Mob1 = CreateMob(generDNA());
-        Mob2 = CreateMob(generDNA());
+        Mob1 = CreateMob(new DNA());
+        Mob2 = CreateMob(new DNA());
 
 
         Mob1.GetComponent<EvolutionMob>().SetTarget(Mob2);
@@ -46,7 +46,8 @@ public class CreatorMob : MonoBehaviour {
         return newobj;
     }
 
-    public DNA generDNA()
+    /*
+    public DNA defaultDNA()
     {
         Vector2[] moveVector = new Vector2[5];
         moveVector[0] = new Vector2(1, 1);
@@ -78,6 +79,7 @@ public class CreatorMob : MonoBehaviour {
         DNA newDna = new DNA(1, 1, 1, 1, 1, moveVector, cheсkVector, sizeVector, possVector);
         return newDna;
     }
+    */
     
 
 }
