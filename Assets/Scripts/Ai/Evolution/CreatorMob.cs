@@ -27,7 +27,7 @@ public class CreatorMob : MonoBehaviour {
 
 
         Mob1.GetComponent<EvolutionMob>().SetTarget(Mob2);
-        Mob2.GetComponent<EvolutionMob>().SetTarget(Mob2);
+        Mob2.GetComponent<EvolutionMob>().SetTarget(Mob1);
 
         Mob1.SetActive(true);
         Mob2.SetActive(true);
@@ -55,11 +55,11 @@ public class CreatorMob : MonoBehaviour {
         moveVector[3] = new Vector2(1, 1);
         moveVector[4] = new Vector2(1, 1);
 
-        bool[] cheakVector = new bool[5];
-        cheakVector[0] = true;
-        cheakVector[1] = true;
-        cheakVector[2] = true;
-        cheakVector[3] = true;
+        bool[] cheсkVector = new bool[5];
+        cheсkVector[0] = true;
+        cheсkVector[1] = true;
+        cheсkVector[2] = true;
+        cheсkVector[3] = true;
 
         int[] sizeVector = new int[5];
         sizeVector[0] = 1;
@@ -75,7 +75,7 @@ public class CreatorMob : MonoBehaviour {
 
 
 
-        DNA newDna = new DNA(1, 1, 1, 1, 1, moveVector, cheakVector, sizeVector, possVector);
+        DNA newDna = new DNA(1, 1, 1, 1, 1, moveVector, cheсkVector, sizeVector, possVector);
         return newDna;
     }
     
