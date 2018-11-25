@@ -22,8 +22,8 @@ public class CreatorMob : MonoBehaviour {
 
     public void BattleBegin()
     {
-        Mob1 = CreateMob(new DNA());
-        Mob2 = CreateMob(new DNA());
+        Mob1 = CreateRandomMob(20);
+        Mob2 = CreateRandomMob(20);
 
 
         Mob1.GetComponent<EvolutionMob>().SetTarget(Mob2);
@@ -33,17 +33,38 @@ public class CreatorMob : MonoBehaviour {
         Mob2.SetActive(true);
     }
 
-
     public GameObject CreateMob(DNA cDNA)
     {
-
-        
         GameObject newobj = Instantiate(prefab, transform.position, transform.rotation);
         newobj.GetComponent<EvolutionMob>().SetDNA(cDNA, numberDNA+"");
         
         numberDNA++;
 
         return newobj;
+    }
+
+    public GameObject CreateRandomMob(int points)
+    {
+        GameObject newobj = Instantiate(prefab, transform.position, transform.rotation);
+        newobj.GetComponent<EvolutionMob>().SetDNA(CreateRandomDNA(points), numberDNA+"");
+        
+        numberDNA++;
+
+        return newobj;
+    }
+    
+
+    public void Mutate(DNA oldDNA, int points)
+    {
+        oldDNA.RemovePoints(points);
+        oldDNA.AddPoints(points);
+    }
+
+    public DNA CreateRandomDNA(int points)
+    {
+        DNA newDNA = new DNA();
+        newDNA.AddPoints(points);
+        return(newDNA);
     }
 
     /*
