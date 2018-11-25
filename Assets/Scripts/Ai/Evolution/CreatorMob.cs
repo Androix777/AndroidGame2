@@ -6,9 +6,8 @@ public class CreatorMob : MonoBehaviour {
 
     public GameObject prefab;
 
-    DNA Dn;
+    public GameObject Mob1, Mob2;
 
-    List<DNA> listDNA;
     int numberDNA=0;
 
 	// Use this for initialization
@@ -21,9 +20,35 @@ public class CreatorMob : MonoBehaviour {
 		
 	}
 
-    public void CreateMob()
+    public void BattleBegin()
     {
-        Vector2[] moveVector = new Vector2 [5];
+        Mob1 = CreateMob(generDNA());
+        Mob2 = CreateMob(generDNA());
+
+
+        Mob1.GetComponent<EvolutionMob>().SetTarget(Mob2);
+        Mob2.GetComponent<EvolutionMob>().SetTarget(Mob2);
+
+        Mob1.SetActive(true);
+        Mob2.SetActive(true);
+    }
+
+
+    public GameObject CreateMob(DNA cDNA)
+    {
+
+        
+        GameObject newobj = Instantiate(prefab, transform.position, transform.rotation);
+        newobj.GetComponent<EvolutionMob>().SetDNA(cDNA, numberDNA+"");
+        
+        numberDNA++;
+
+        return newobj;
+    }
+
+    public DNA generDNA()
+    {
+        Vector2[] moveVector = new Vector2[5];
         moveVector[0] = new Vector2(1, 1);
         moveVector[1] = new Vector2(1, 1);
         moveVector[2] = new Vector2(1, 1);
@@ -47,18 +72,12 @@ public class CreatorMob : MonoBehaviour {
         possVector[1] = new Vector2(1, 1);
         possVector[2] = new Vector2(1, 1);
         possVector[3] = new Vector2(1, 1);
-       
 
 
-        DNA newDna = new DNA (1,1,1,1,1,moveVector,cheakVector,sizeVector, possVector);
 
-        GameObject newobj = Instantiate(prefab, transform.position, transform.rotation);
-        newobj.GetComponent<EvolutionMob>().SetDNA(newDna, numberDNA+"");
-        newobj.SetActive(true);
-
-        numberDNA++;
+        DNA newDna = new DNA(1, 1, 1, 1, 1, moveVector, cheakVector, sizeVector, possVector);
+        return newDna;
     }
-
-
+    
 
 }

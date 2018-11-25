@@ -6,12 +6,12 @@ public class EvolutionMob : MonoBehaviour {
 
     string ID;
     DNA myDNA;
-    int hp, speed;
+    public int hp, speed;
     Vector2 baseMoveVector1, baseMoveVector2, baseMoveVector3;
     Vector2 reactionBulletVector, reactionEnemyVector;
     int timeMoveVector;
-
-    public GameObject[] parts=new GameObject[9];
+    protected GameObject target;
+    public GameObject[] parts;
 
     // Use this for initialization
     void Start () {
@@ -24,7 +24,7 @@ public class EvolutionMob : MonoBehaviour {
 
             if (myDNA.parts[i])
             {
-                obj.GetComponent<ParentPart>().SetStats(myDNA.damage, myDNA.speed, ID, gameObject);
+                obj.GetComponent<ParentPart>().SetStats(myDNA.damage, myDNA.speed, ID, gameObject,target);
                 obj.transform.localPosition = myDNA.poss[i];
                 obj.transform.localScale *= myDNA.sizes[i];
                 obj.SetActive(true);
@@ -41,5 +41,13 @@ public class EvolutionMob : MonoBehaviour {
     {
        this.myDNA = myDNA;
         this.ID = ID;
-    } 
+    }
+    public void GetDamage(int damage)
+    {
+        hp -= damage;
+    }
+    public void SetTarget(GameObject target)
+    {
+        this.target = target;
+    }
 }
