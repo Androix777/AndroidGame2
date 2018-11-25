@@ -89,7 +89,7 @@ public class DNA  {
                     }
                     break;
                 case 2:
-                    if(hp >= MAX_SPEED)
+                    if(speed >= MAX_SPEED)
                     {
                         break;
                     }
@@ -101,7 +101,7 @@ public class DNA  {
                     }
                     break;
                 case 3:
-                    if(hp >= MAX_DAMAGE)
+                    if(damage >= MAX_DAMAGE)
                     {
                         break;
                     }
@@ -113,7 +113,7 @@ public class DNA  {
                     }
                     break;
                 case 4:
-                    if(hp >= MAX_SPEED_DAMAGE)
+                    if(speedDamage >= MAX_SPEED_DAMAGE)
                     {
                         break;
                     }
@@ -410,7 +410,7 @@ public class DNA  {
                     }
                     break;
                 case 2:
-                    if(hp <= 1)
+                    if(speed <= 1)
                     {
                         break;
                     }
@@ -422,7 +422,7 @@ public class DNA  {
                     }
                     break;
                 case 3:
-                    if(hp <= 1)
+                    if(damage <= 1)
                     {
                         break;
                     }
@@ -434,7 +434,7 @@ public class DNA  {
                     }
                     break;
                 case 4:
-                    if(hp <= 1)
+                    if(speedDamage <= 1)
                     {
                         break;
                     }
