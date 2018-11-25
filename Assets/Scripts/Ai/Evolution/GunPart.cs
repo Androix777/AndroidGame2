@@ -4,35 +4,46 @@ using UnityEngine;
 
 public class GunPart : ParentPart
 {
-    
+    public GameObject ball;
     public GameObject bullet;
     public int reload;
 	// Use this for initialization
 	void Start () {
-		
-	}
+        ball = GameObject.FindGameObjectWithTag("bullet");
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		if (reload > 0)
+        if (target != null)
         {
-            reload--;
+            if (reload > 0)
+            {
+                reload--;
+            }
+            Fire();
         }
-        Fire();
+		
 	}
 
     public void Fire()
     {
         if (reload <= 0)
-        {
-            GameObject bull = Instantiate(bullet, transform.position, transform.rotation);
-            bull.transform.SetParent(GameObject.FindGameObjectWithTag("Room").transform);
-            Destroy(bull, 5);
-            Vector2 moveVector = target.transform.position - transform.position; 
-            bullet.GetComponent<BulletEvolution>().CreateBullet(ID, damage, moveVector);
-            bull.SetActive(true);
-
-            reload = 3000 / speedDamage;
+        { if (bullet != null)
+            {
+                GameObject boll = Instantiate(bullet, transform.position, transform.rotation, transform) as GameObject;
+                boll.transform.SetParent(GameObject.FindGameObjectWithTag("Room").transform);
+                Vector2 moveVector = target.transform.position - transform.position;
+                boll.GetComponent<BulletEvolution>().CreateBullet(ID, damage, moveVector);
+                boll.SetActive(true);
+                Destroy(boll, 5);
+                if (speedDamage != 0)
+                {
+                    reload = 500 / speedDamage;
+                }
+                else reload = 500;
+               // Debug.Log("Fire");
+            }
+            
         }
 
     }

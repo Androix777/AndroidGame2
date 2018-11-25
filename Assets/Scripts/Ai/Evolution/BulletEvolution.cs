@@ -12,35 +12,41 @@ public class BulletEvolution : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        gameObject.GetComponent<Rigidbody2D>().AddForce(speed * moveVector);
+        
+        //gameObject.GetComponent<Rigidbody2D>().AddForce(speed * moveVector);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        transform.Translate(transform.TransformPoint(moveVector) * Time.deltaTime * speed);
     }
 
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.tag != transform.tag && collision.transform.tag != transform.tag + "b" && collision.transform.tag != transform.tag + "part")
+        if (collision.transform.tag == "wall")
         {
-            if (collision.transform.tag[collision.transform.tag.Length - 1] == 't')
+            Destroy(gameObject, 0);
+        }
+        if ( collision.transform.GetComponent<EvolutionMob>() != null)
+        {
+            if (collision.gameObject.GetComponent<EvolutionMob>().ID != ID)
+            {
+                collision.gameObject.GetComponent<EvolutionMob>().GetDamage(damage);
+                Destroy(gameObject, 0);
+            }
+        }
+        if (collision.transform.GetComponent<ParentPart>() != null )
+        {
+            if (collision.gameObject.GetComponent<ParentPart>().ID != ID)
             {
                 collision.gameObject.GetComponent<ParentPart>().GetDamage(damage);
                 Destroy(gameObject, 0);
             }
-            else
-            {
-                if (collision.transform.tag[collision.transform.tag.Length - 1] != 'b')
-                {
+            
 
-                    collision.gameObject.GetComponent<EvolutionMob>().GetDamage(damage);
-                    Destroy(gameObject, 0);
-                }
-            }
         }
 
     }
@@ -50,7 +56,7 @@ public class BulletEvolution : MonoBehaviour {
         this.ID = ID;
         this.damage = damage;
         this.moveVector = moveVector;
-        transform.tag = ID + "b";
+       
     }
     
 }

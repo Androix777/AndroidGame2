@@ -3,61 +3,98 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CreatorMob : MonoBehaviour {
+    public int leght;
+    public GameObject prefabBattle;
 
-    public GameObject prefab;
+    //public GameObject Mob1, Mob2;
 
-    public GameObject Mob1, Mob2;
+    List<DNA> database =new List<DNA>();
 
-    int numberDNA=0;
 
+    int numberDNA = 0;
+
+    public int waitingTime,reload;
+    public bool start;
+    public int age;
+    int retDNA;
+    DNA winner;
 	// Use this for initialization
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
+
 	}
 
-    public void BattleBegin()
+    public void EvolutionBegin()
     {
-        Mob1 = CreateRandomMob(20);
-        Mob2 = CreateRandomMob(20);
+        for (int i = 0;i< leght; i++)
+        {
+            for (int j = 0; j < leght; j++)
+            {
+                
+                GameObject newobj = Instantiate(prefabBattle, transform.position, transform.rotation, transform.parent);
+                newobj.GetComponent<Judge>().BattleBegin(CreateRandomDNA(20), CreateRandomDNA(20));
+                Vector3 pos = new Vector3(i * 15, 10, 0);
+                newobj.transform.localPosition = pos;
+                numberDNA++;
+                newobj.SetActive(true);
+            }
+        }
 
-
-        Mob1.GetComponent<EvolutionMob>().SetTarget(Mob2);
-        Mob2.GetComponent<EvolutionMob>().SetTarget(Mob1);
-
-        Mob1.SetActive(true);
-        Mob2.SetActive(true);
     }
-
-    public GameObject CreateMob(DNA cDNA)
+    public void NextAgeBegin()
     {
-        GameObject newobj = Instantiate(prefab, transform.position, transform.rotation);
-        newobj.GetComponent<EvolutionMob>().SetDNA(cDNA, numberDNA+"");
+        List<DNA> DNAList=new List<DNA>();
+        foreach(DNA dn in database)
+        {
+            DNAList.Add(dn);
+            if (Random.Range(0, 5) > 1)
+            {
+                DNAList.Add(Mutate(dn,5));
+            }
+            else
+            {
+                DNAList.Add(CreateRandomDNA(20));
+            }
+        }
+
         
-        numberDNA++;
+        for (int i = 0; i < leght; i++)
+        {
+            for (int j = 0; j < leght; j++)
+            {
+                    
+                    GameObject newobj = Instantiate(prefabBattle, transform.position, transform.rotation, transform.parent);
+                    int number = Random.Range(0, DNAList.Count);
+                    DNA fDNA = DNAList[number];
+                    DNAList.RemoveAt(number);
 
-        return newobj;
+                    number = Random.Range(0, DNAList.Count);
+                    DNA sDNA = DNAList[number];
+                    DNAList.RemoveAt(number);
+
+                    newobj.GetComponent<Judge>().BattleBegin(fDNA, sDNA);
+                    Vector3 pos = new Vector3(i * 15,j * 15, 0);
+                    newobj.transform.localPosition = pos;
+                    numberDNA++;
+                    newobj.SetActive(true);
+                
+            }
+        }
+        database.Clear();
+        retDNA = 0;
     }
 
-    public GameObject CreateRandomMob(int points)
+    public DNA Mutate(DNA oldDNA, int points)
     {
-        GameObject newobj = Instantiate(prefab, transform.position, transform.rotation);
-        newobj.GetComponent<EvolutionMob>().SetDNA(CreateRandomDNA(points), numberDNA+"");
-        
-        numberDNA++;
+        DNA newDNA = oldDNA;
 
-        return newobj;
-    }
-    
-
-    public void Mutate(DNA oldDNA, int points)
-    {
-        oldDNA.RemovePoints(points);
-        oldDNA.AddPoints(points);
+        newDNA.RemovePoints(points);
+        newDNA.AddPoints(points);
+        return newDNA;
     }
 
     public DNA CreateRandomDNA(int points)
@@ -66,6 +103,21 @@ public class CreatorMob : MonoBehaviour {
         newDNA.AddPoints(points);
         return(newDNA);
     }
+
+    public void setWinner(DNA win)
+    {
+        if (retDNA < leght * leght)
+        {
+            database.Add(win);
+            retDNA++;
+        }
+        if (retDNA >= leght * leght)
+        {
+            age++;
+            NextAgeBegin();
+        }
+    }
+
 
     /*
     public DNA defaultDNA()

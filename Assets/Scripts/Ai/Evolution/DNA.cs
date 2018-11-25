@@ -5,8 +5,8 @@ using UnityEngine;
 public class DNA  {
     const int MIN_VECTOR = -10;
     const int MAX_VECTOR = 10;
-    const int MIN_VECTOR_PART = -10;
-    const int MAX_VECTOR_PART = 10;
+    const float MIN_VECTOR_PART = -0.5f;
+    const float MAX_VECTOR_PART = 0.5f;
     const int NUM_PARTS = 9;
     const int MAX_HP = 5;
     const int MAX_SPEED = 5;

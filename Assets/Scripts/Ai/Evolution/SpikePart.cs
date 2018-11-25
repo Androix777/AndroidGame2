@@ -18,27 +18,41 @@ public class SpikePart : ParentPart
         }
 	}
 
-    
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.transform.tag != transform.tag && collision.transform.tag != transform.tag + "b" && collision.transform.tag != transform.tag + "part" )
+    private void OnCollisionStay2D(Collision2D collision)
+    {       
+        if (collision.transform.GetComponent<EvolutionMob>() != null)
         {
-            if (collision.transform.tag[collision.transform.tag.Length-1] == 't')
+            if (collision.gameObject.GetComponent<EvolutionMob>().ID != ID)
             {
-                collision.gameObject.GetComponent<ParentPart>().GetDamage(damage);
-                reload = 3000 / speedDamage;
-            }
-            else
-            {if (collision.transform.tag[collision.transform.tag.Length - 1] != 'b')
+                if (reload <= 0)
                 {
-                    if (reload <= 0)
+                    collision.gameObject.GetComponent<EvolutionMob>().GetDamage(damage);
+                    if (speedDamage != 0)
                     {
-                        collision.gameObject.GetComponent<EvolutionMob>().GetDamage(damage);
-                        reload = 3000 / speedDamage;
+                        reload = 500 / speedDamage;
                     }
-                }             
+                    else reload = 500;
+                }
             }
         }
+        if (collision.transform.GetComponent<ParentPart>() != null)
+        {
+            if (collision.gameObject.GetComponent<ParentPart>().ID != ID)
+            {
+                if (reload <= 0)
+                {
+                    collision.gameObject.GetComponent<ParentPart>().GetDamage(damage);
+
+                    if (speedDamage != 0)
+                    {
+                        reload = 500 / speedDamage;
+                    }
+                    else reload = 500;
+                }
+            }
+
+
+        }
+        
     }
 }

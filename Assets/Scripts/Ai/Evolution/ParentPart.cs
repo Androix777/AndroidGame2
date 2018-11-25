@@ -5,7 +5,7 @@ using UnityEngine;
 public class ParentPart : MonoBehaviour {
     protected int damage, speedDamage;
     protected GameObject god;
-    protected string ID;
+    public string ID;
     protected GameObject target;
     // Use this for initialization
     void Start () {
@@ -21,7 +21,6 @@ public class ParentPart : MonoBehaviour {
     {
         damage = dam;
         speedDamage = speed;
-        transform.tag = ID+"part";
         this.ID = ID;
         god = lord;
         this.target = target;

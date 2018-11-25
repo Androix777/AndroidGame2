@@ -12,6 +12,8 @@ TagManager:
   - Hero
   - Enemy
   - ControlCam
+  - wall
+  - bullet
   layers:
   - Default
   - TransparentFX
