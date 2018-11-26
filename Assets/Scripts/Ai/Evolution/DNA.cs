@@ -48,26 +48,6 @@ public class DNA  {
         }
     }
 
-    public DNA(int hp, int speed, int damage, int speedDamage, int moveTime, Vector2[] vectorsMove, bool[] parts, int[] sizes, Vector2[] poss)
-    {
-        this.hp = hp;
-        this.speed = speed;
-        this.damage = damage;
-        this.speedDamage = speedDamage;
-        this.moveTime = moveTime;
-
-        baseMoveVector1 = vectorsMove[0];
-        baseMoveVector2 = vectorsMove[1];
-        baseMoveVector3 = vectorsMove[2];
-
-        reactionBulletVector = vectorsMove[3];
-        reactionEnemyVector = vectorsMove[4];
-
-        this.parts = parts;
-        this.sizes = sizes;
-        this.poss = poss;
-
-    }
 
     public void AddPoints (int addedPoints)
     {

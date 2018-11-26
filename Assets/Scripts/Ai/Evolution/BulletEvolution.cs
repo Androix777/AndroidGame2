@@ -19,7 +19,7 @@ public class BulletEvolution : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(transform.TransformPoint(moveVector) * Time.deltaTime * speed);
+        transform.Translate( moveVector.normalized * Time.deltaTime * speed);
     }
 
 

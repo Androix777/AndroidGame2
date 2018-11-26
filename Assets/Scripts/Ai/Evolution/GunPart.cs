@@ -32,7 +32,8 @@ public class GunPart : ParentPart
             {
                 GameObject boll = Instantiate(bullet, transform.position, transform.rotation, transform) as GameObject;
                 boll.transform.SetParent(GameObject.FindGameObjectWithTag("Room").transform);
-                Vector2 moveVector = target.transform.position - transform.position;
+                boll.transform.rotation = new Quaternion(0,0,0,0);
+                Vector3 moveVector = target.transform.position - transform.position;
                 boll.GetComponent<BulletEvolution>().CreateBullet(ID, damage, moveVector);
                 boll.SetActive(true);
                 Destroy(boll, 5);

@@ -12,21 +12,25 @@ public class CreatorMob : MonoBehaviour {
 
 
     int numberDNA = 0;
-
+    int DNADataBaseCount;
     public int waitingTime,reload;
     public bool start;
     public int age;
     int retDNA;
     DNA winner;
+
+    public GameObject[] databaseArena;
 	// Use this for initialization
 	void Start () {
-	}
+        database = new List<DNA>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
 
-	}
+        DNADataBaseCount = database.Count;
+        databaseArena = new GameObject[leght * leght];
+    }
 
     public void EvolutionBegin()
     {
@@ -36,24 +40,31 @@ public class CreatorMob : MonoBehaviour {
             {
                 
                 GameObject newobj = Instantiate(prefabBattle, transform.position, transform.rotation, transform.parent);
+                
+                databaseArena[i + j] = newobj;
+                Debug.Log(databaseArena[i + j].name);
                 newobj.GetComponent<Judge>().BattleBegin(CreateRandomDNA(20), CreateRandomDNA(20));
-                Vector3 pos = new Vector3(i * 15, 10, 0);
+                Vector3 pos = new Vector3(i * 15,j * 15, 0);
                 newobj.transform.localPosition = pos;
                 numberDNA++;
                 newobj.SetActive(true);
+                
             }
         }
 
     }
     public void NextAgeBegin()
     {
+        
         List<DNA> DNAList=new List<DNA>();
         foreach(DNA dn in database)
         {
-            DNAList.Add(dn);
+            DNA dna = dn;
+            DNAList.Add(dna);
             if (Random.Range(0, 5) > 1)
             {
-                DNAList.Add(Mutate(dn,5));
+                
+                DNAList.Add(Mutate(dna, 5));
             }
             else
             {
@@ -81,7 +92,7 @@ public class CreatorMob : MonoBehaviour {
                     newobj.transform.localPosition = pos;
                     numberDNA++;
                     newobj.SetActive(true);
-                
+                    databaseArena[i + j] = newobj;
             }
         }
         database.Clear();
@@ -90,8 +101,8 @@ public class CreatorMob : MonoBehaviour {
 
     public DNA Mutate(DNA oldDNA, int points)
     {
-        DNA newDNA = oldDNA;
-
+        DNA newDNA =new DNA();
+        newDNA = oldDNA;       
         newDNA.RemovePoints(points);
         newDNA.AddPoints(points);
         return newDNA;
@@ -106,8 +117,9 @@ public class CreatorMob : MonoBehaviour {
 
     public void setWinner(DNA win)
     {
-        if (retDNA < leght * leght)
+        if (database.Count <= leght * leght)
         {
+            
             database.Add(win);
             retDNA++;
         }

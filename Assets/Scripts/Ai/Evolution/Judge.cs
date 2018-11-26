@@ -27,33 +27,12 @@ public class Judge : MonoBehaviour {
         reload--;
         if (start)
         {
-            if (Mob1 == null)
+            if (Mob1 == null || Mob2 == null || reload <= 0)
             {
-                winner = mob2DNA;
+                winner = setwin();
                 retWin();
             }
-            else
-            {
-                if (Mob2 == null)
-                {
-                    winner = mob1DNA;
-                    retWin();
-                }
-            }
-            if (reload <= 0)
-            {
-                if (Mob1.GetComponent<EvolutionMob>().hp / Mob1.GetComponent<EvolutionMob>().GetDNA().hp * 1f > Mob2.GetComponent<EvolutionMob>().hp / Mob2.GetComponent<EvolutionMob>().GetDNA().hp)
-                {
-                    winner = mob1DNA;
-                    retWin();
-                }
-                else
-                {
-                    winner = mob2DNA;
-                    retWin();
-                }
-            }
-            
+           
         }
         
     }
@@ -90,6 +69,33 @@ public class Judge : MonoBehaviour {
     public void retWin()
     {
         creator.GetComponent<CreatorMob>().setWinner(winner);
+        start = false;
         Destroy(gameObject, 0);
+    }
+
+    public DNA setwin()
+    {
+        DNA winner;
+        if (Mob1 == null )
+        {
+            winner = mob2DNA;
+            return winner;
+        }
+
+        if (Mob2 == null)
+        {
+            winner = mob1DNA;
+            return winner;
+        }
+
+        if (Mob1.GetComponent<EvolutionMob>().hp / Mob1.GetComponent<EvolutionMob>().GetDNA().hp * 1f > Mob2.GetComponent<EvolutionMob>().hp / Mob2.GetComponent<EvolutionMob>().GetDNA().hp)
+        {
+            winner = mob1DNA;
+        }
+        else
+        {
+            winner = mob2DNA;
+        }
+        return winner;
     }
 }

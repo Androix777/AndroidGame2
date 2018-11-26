@@ -25,6 +25,11 @@ public class EvolutionMob : MonoBehaviour {
 
         hp = myDNA.hp;
         speed = myDNA.speed;
+        baseMoveVector1 = myDNA.baseMoveVector1;
+        baseMoveVector2 = myDNA.baseMoveVector2;
+        baseMoveVector3 = myDNA.baseMoveVector3;
+        reactionBulletVector = myDNA.reactionBulletVector;
+        reactionEnemyVector = myDNA.reactionEnemyVector;
         int i = 0;
 		foreach(GameObject obj in parts)
         {
@@ -87,12 +92,8 @@ public class EvolutionMob : MonoBehaviour {
 
         //myrg.GetComponent<Rigidbody2D>().MovePosition(transform.TransformPoint((move + target.transform.position - transform.position).normalized));
         myrg.velocity = (move + target.transform.position - transform.position).normalized*speed;
-        int i = 0;
-        foreach (GameObject gobj in parts)
-        {           
-            gobj.GetComponent<Rigidbody2D>().MovePosition(transform.TransformPoint(myDNA.poss[i]));
-            i++;
-        }
+        
+       
         }
 
     }
