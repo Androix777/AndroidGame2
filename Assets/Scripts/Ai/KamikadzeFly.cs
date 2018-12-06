@@ -39,6 +39,7 @@ public class KamikadzeFly : Сreature
 
         }
         gameObject.GetComponent<Rigidbody2D>().velocity = move;
+        transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(Vector3.forward, move),0.1f);  
     }
 
     public bool SeeTarget( )
